@@ -41,14 +41,14 @@ export default function InstallAppButton() {
   if (installed) return null;
   const apple = isAppleMobile();
   return <>
-    <button type="button" className="ssc-pwa-install" onClick={install} aria-label="Install Harmonix app" title="Install Harmonix on this device">
+    <button type="button" className="ssc-pwa-install" onClick={install} aria-label="Install SSC app" title="Install Site Safety Consultants on this device">
       <Download size={17} strokeWidth={2}/><span>Install app</span>
     </button>
     {help && <div className="ssc-pwa-modal-backdrop" onMouseDown={e => e.target === e.currentTarget && setHelp(false)}>
       <section className="ssc-pwa-modal" role="dialog" aria-modal="true" aria-labelledby="ssc-install-title">
         <button type="button" className="ssc-pwa-close" onClick={() => setHelp(false)} aria-label="Close"><X size={20}/></button>
         <div className="ssc-pwa-modal-icon"><Smartphone size={24}/></div>
-        <h2 id="ssc-install-title">Install Harmonix on your device</h2>
+        <h2 id="ssc-install-title">Install Site Safety Consultants (SSC)</h2>
         {apple ? <>
           <p>Open this page in <strong>Safari</strong>, then:</p>
           <ol><li>Tap the <Share2 size={16} aria-label="Share"/> <strong>Share</strong> icon.</li><li>Choose <strong>Add to Home Screen</strong> (or <strong>Open as Web App</strong>, where shown).</li><li>Tap <strong>Add</strong>.</li></ol>

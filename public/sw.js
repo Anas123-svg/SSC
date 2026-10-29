@@ -1,6 +1,6 @@
-/* Harmonix PWA: cache only the application shell and same-origin static assets.
+/* SSC PWA: cache only the application shell and same-origin static assets.
  * Local inspection records remain in browser storage, never in the SW cache. */
-const VERSION = 'harmonix-pwa-v3-20261030';
+const VERSION = 'ssc-pwa-v4-20261030';
 const SHELL = `${VERSION}-shell`;
 const STATIC = `${VERSION}-static`;
 const SCOPE = new URL(self.registration.scope);
@@ -8,7 +8,7 @@ const HOME = SCOPE.pathname;
 const relative = path => new URL(path, SCOPE).pathname;
 const FALLBACK = relative('offline.html');
 const essentials = [HOME, relative('offline.html'), relative('manifest.webmanifest'),
-  relative('icons/harmonix-192.png'), relative('icons/harmonix-512.png'), relative('icons/harmonix-maskable-512.png')];
+  relative('icons/ssc-192.png'), relative('icons/ssc-512.png'), relative('icons/ssc-maskable-512.png')];
 const isStatic = url => /\.(?:js|css|png|jpe?g|webp|svg|ico|woff2?|ttf)(?:$)/i.test(url.pathname);
 const isLocal = url => url.origin === SCOPE.origin && url.pathname.startsWith(SCOPE.pathname);
 
@@ -40,7 +40,7 @@ self.addEventListener('install', event => {
     const results = await Promise.all(essentials.map(url => cacheResource(cache, url)));
     // Only activate if HTML is present. An offline-first launch cannot work
     // if the entry document was never installed.
-    if (!results[0]) throw new Error('Harmonix app shell was not available for offline installation.');
+    if (!results[0]) throw new Error('SSC app shell was not available for offline installation.');
     const response = await cache.match(HOME);
     if (response) await precacheIndexAssets(await response.text());
     await self.skipWaiting();
