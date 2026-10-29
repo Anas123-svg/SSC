@@ -1,17 +1,35 @@
 {
-  "id": "/",
-  "name": "SSC · Harmonix Site Inspections",
-  "short_name": "SSC",
-  "description": "Site inspections, HXC compliance audits and project safety management.",
-  "start_url": "/",
-  "scope": "/",
+  "id": "./",
+  "name": "Harmonix Site Inspections",
+  "short_name": "Harmonix",
+  "description": "Harmonix HXC compliance inspections and project safety management.",
+  "start_url": "./#/workspace/harmonix/overview",
+  "scope": "./",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "background_color": "#ffffff",
   "theme_color": "#153e56",
   "icons": [
-    { "src": "/icons/ssc-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/ssc-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/ssc-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/harmonix-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/harmonix-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/harmonix-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

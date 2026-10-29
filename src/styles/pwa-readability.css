@@ -1,0 +1,39 @@
+/* Harmonix PWA: predictable locally available typography on every device.
+   Avoid remote webfonts for inspections and document editing. */
+:root { --hxc-offline-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+.hxstudio, .hxstudio *, .hwd-inspection-page, .hwd-inspection-page *,
+.hwd-document, .hwd-document *, .hwd-report-title, .hwd-report-title *,
+.hxstudio-preview-screen, .hxstudio-preview-screen * {
+  font-family: var(--hxc-offline-font) !important;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+.hwd-document, .hwd-inspection-page, .hxstudio, .ix-page { font-size: 14px; line-height: 1.5; }
+.hwd-document h1, .hwd-document h2, .hwd-document h3,
+.hxstudio h1, .hxstudio h2, .hxstudio h3 { letter-spacing:-.025em; line-height:1.3; }
+.hwd-document label, .hwd-document th, .hwd-document td { line-height:1.5; }
+.hwd-document input, .hwd-document select, .hwd-document textarea,
+.hxstudio input, .hxstudio select, .hxstudio textarea { max-width:100%; color:#24354b; }
+.hwd-document :is(input,select,textarea):focus-visible,
+.hxstudio :is(input,select,textarea):focus-visible { outline:2px solid #286b90; outline-offset:1px; }
+.ssc-offline-banner { display:flex;align-items:center;gap:9px; padding:11px 15px; margin:0 0 18px; border:1px solid #b7d2e4; border-radius:10px; background:#eff7fc; color:#244969; font:600 12px/1.5 var(--hxc-offline-font); }
+.ssc-recovery { max-width:680px; margin:40px auto; padding:30px; background:#fff; border:1px solid #dce4ed; border-radius:15px; font-family:var(--hxc-offline-font); }
+.ssc-recovery > svg { color:#be6b47; }
+.ssc-recovery h2 { font-size:23px; margin:12px 0; }
+.ssc-recovery p { font-size:14px; color:#526277; line-height:1.65; }
+.ssc-recovery-actions {display:flex;gap:9px;flex-wrap:wrap} .ssc-recovery-actions button {display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border-radius:9px;background:#fff;border:1px solid #cad5e1;color:#21415e;font-weight:650} .ssc-recovery-actions button:last-child {background:#1b4e72;color:white;border-color:#1b4e72}
+@media screen and (max-width:900px) {
+  .hxstudio {font-size:14px;}
+  .hwd-document, .hwd-inspection-page {font-size:14px;line-height:1.6;}
+  .hwd-document h2 {font-size:18px!important;}
+  .hwd-word-page {overflow-wrap:anywhere;}
+  .hwd-checklist-table .hwd-requirement {font-size:14px;line-height:1.55;}
+  .hxstudio-field-editor, .hxstudio-block-info strong {font-size:14px;}
+  .hxstudio-section-fields input, .hxstudio-section-fields textarea, .hxstudio-properties input, .hxstudio-properties select, .hxstudio-properties textarea,
+  .hwd-document input, .hwd-document select, .hwd-document textarea, .hwd-inspection-page input, .hwd-inspection-page select, .hwd-inspection-page textarea {font-size:16px!important;min-height:42px;}
+}
+@media (prefers-reduced-motion: reduce) { .hxstudio *, .hwd-document * {scroll-behavior:auto!important;transition:none!important;} }
+@media print {.ssc-offline-banner,.ssc-recovery {display:none!important;} .hwd-document,.hwd-document * {font-family:Arial,Helvetica,sans-serif!important;} }
+
+/* The inspection register and schedule also use offline-safe fonts. */
+.ix-page, .ix-page *, .sx-page, .sx-page * { font-family:var(--hxc-offline-font)!important; }

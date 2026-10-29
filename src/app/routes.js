@@ -1,11 +1,13 @@
 import { ADMIN_WORKSPACE } from '../data/workspaces.js';
 import { MODULES, isAdministrator } from './moduleRegistry.js';
 import { canAccessPage, PAGE_META, routeFor } from './navigation.js';
-export function resolveRoute(hash, workspaces, savedId = 'admin', permissions = { role: 'Admin' }) {
+export function resolveRoute(hash, workspaces, savedId = 'harmonix', permissions = { role: 'Admin' }) {
   let parts;
   try { parts = hash.replace(/^#\/?/, '').split('?')[0].split('/').filter(Boolean).map(decodeURIComponent); }
   catch { parts = ['invalid', 'route']; }
-  let workspaceId = savedId, token, detailId, subview, legacy = false;
+  // Deep links remain intact. Empty/legacy-root routes always start in Harmonix.
+  const harmonix = workspaces.find(w => w.id === 'harmonix' && w.status !== 'Inactive');
+  let workspaceId = harmonix?.id || savedId, token, detailId, subview, legacy = false;
   if (parts[0] === 'admin') { workspaceId = 'admin'; token = parts[1]; detailId = parts[2]; subview = parts[3]; }
   else if (parts[0] === 'workspace') { workspaceId = parts[1]; token = parts[2]; detailId = parts[3]; subview = parts[4]; }
   else if (parts.length <= 1) { token = parts[0]; legacy = true; }

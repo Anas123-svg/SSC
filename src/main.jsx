@@ -17,6 +17,7 @@ import './styles/analytics-detail.css';
 import './styles/admin-simple.css';
 import './styles/hxc-document-form.css';
 import './styles/pwa-mobile.css';
+import './styles/pwa-readability.css';
 
 initPWA();
 

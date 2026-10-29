@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { CheckCircle2, X } from 'lucide-react';
+import { CheckCircle2, X, WifiOff } from 'lucide-react';
 import { ADMIN_WORKSPACE, isVisibleWorkspace } from '../data/workspaces.js';
 import { loadDatabase, saveDatabase, addWorkspace, upsertRecord, scopeRecords, isOpen } from '../data/repository.js';
 import { isAdministrator } from './moduleRegistry.js';
@@ -13,21 +13,30 @@ import Topbar from '../components/layout/Topbar.jsx';
 import PageHeader from '../components/layout/PageHeader.jsx';
 import Footer from '../components/layout/Footer.jsx';
 import CreateWorkspaceDialog from '../components/dialogs/CreateWorkspaceDialog.jsx';
+import AppErrorBoundary from './AppErrorBoundary.jsx';
 export default function App() {
   const [initial] = useState(() => { try { return { db: loadDatabase(localStorage) }; } catch (e) { return { error: e.message }; } });
   const [db, setDb] = useState(initial.db);
   const [hash, setHash] = useState(window.location.hash);
+  const [offline, setOffline] = useState(() => !navigator.onLine);
   const [permissions] = useState({ role: 'Admin' }); // Demo session; never an authentication boundary.
   const [modal, setModal] = useState(null), [navOpen, setNavOpen] = useState(false), [notify, setNotify] = useState(false);
   const [query, setQuery] = useState(''), [toast, setToast] = useState(''), [storageError, setStorageError] = useState('');
   const [hxcRevision, setHxcRevision] = useState(0);
   const searchRef = useRef(null);
-  let savedId = 'admin';
-  try { savedId = JSON.parse(localStorage.getItem('harmonix-active-workspace')) || 'admin'; } catch { /* Legacy malformed preference. */ }
+  // A fresh visit or standalone PWA launch must open Harmonix, never Admin.
+  // Explicit bookmarks (including /admin) still work.
+  const savedId = 'harmonix';
   const route = db ? resolveRoute(hash, db.workspaces, savedId, permissions) : { workspaceId: 'admin', page: 'overview' };
   const { workspaceId: activeWorkspaceId, page, detailId, subview } = route;
   const activeWorkspace = db?.workspaces.find(w => w.id === activeWorkspaceId) || ADMIN_WORKSPACE;
   const isAdmin = isAdministrator(permissions);
+  useEffect(() => {
+    const update = () => setOffline(!navigator.onLine);
+    window.addEventListener('online', update);
+    window.addEventListener('offline', update);
+    return () => { window.removeEventListener('online', update); window.removeEventListener('offline', update); };
+  }, []);
   useEffect(() => {
     const changed = () => setHxcRevision(v => v + 1);
     window.addEventListener('ssc-hxc-changed', changed);
@@ -92,7 +101,8 @@ export default function App() {
   };
   return <PortalProvider value={context}><div className="shell"><Sidebar /><div className="right-shell"><Topbar /><main className="content">
     {storageError && <p role="alert" className="error">{storageError}</p>}
-    <PageHeader /><PageContent key={activeWorkspaceId + ':' + page + ':' + (detailId || '') + ':' + (subview || '')} page={page} />
+    {offline && <div className="ssc-offline-banner" role="status"><WifiOff size={16}/> Offline mode: inspections and templates can be edited on this device. Live maps and address search need internet. Remember to save.</div>}
+    <AppErrorBoundary key={activeWorkspaceId + ':' + page + ':' + (detailId || '') + ':' + (subview || '')} onHome={() => go('overview', null, 'harmonix')}><PageHeader /><PageContent page={page} /></AppErrorBoundary>
     </main><Footer /></div>{modal?.kind === 'new-workspace' && <CreateWorkspaceDialog close={() => setModal(null)} />}
     {toast && <div className="toast" role="status"><CheckCircle2 size={18} />{toast}<button onClick={() => setToast('')} aria-label="Dismiss"><X size={15} /></button></div>}
     </div></PortalProvider>;

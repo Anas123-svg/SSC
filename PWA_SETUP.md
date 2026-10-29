@@ -1,40 +1,33 @@
-# SSC PWA – Installation and deployment
+# Harmonix Offline PWA — setup and verification
 
-This package was built from `SSC_Simplified_Admin_Panel_SRC.zip` (the latest version provided prior to this request).
+**Source:** Based on the latest simplified Admin + responsive PWA package, with the updated HXC editor, inspection workflows and project pages preserved.
 
-## Copy the files
+## Install the patch
 
-1. Merge the included `src/` folder into your existing Vite React project's `src/` folder.
-2. **Also copy the included `public/` folder into the project's root `public/` folder.** This is REQUIRED; the manifest, service worker, offline fallback and icons are not under `src/`.
-3. Keep your existing `package.json`, `vite.config.js`, and `index.html`; no new dependencies are needed.
-4. Run your normal project build (`npm install`, `npm run build`) and deploy the compiled output to HTTPS. Don't open the generated files from a `file://` URL.
-5. Visit from mobile Safari or Android Chrome. The install button is only shown for screens <=900px. A device that is already in standalone installed mode won't show it.
+1. Merge the ZIP `src/` and `public/` folders with your existing Vite project's folders. Do not delete other existing assets in `public/`.
+2. Replace your root `index.html` with the supplied version. It removes remote Google Fonts, sets Harmonix branding, and links the PWA manifest.
+3. Keep your project's `package.json` and Vite configuration. Run `npm install` and `npm run build`, then deploy the **production** build over HTTPS.
+4. On mobile, first load the deployed app **online**, then use the Install App control (Chrome Android) or Safari Share → Add to Home Screen (iOS). Do not test by opening raw files with `file://`.
+5. After that first online visit, try airplane mode, reopen the PWA, open Templates and Inspections, create a Draft, sign and save it, then reload while still offline.
+6. If an old build persists after replacement, close the installed app, reopen it online to update the service worker, and reload. A previously installed SSC app may remain separate because this manifest identifies the Harmonix app.
 
-The manifest is linked by `src/pwa.js` at startup. Production registration happens on HTTPS or localhost. It is intentionally NOT registered during Vite development (`import.meta.env.PROD`). For local installation testing, use `npm run build && npm run preview` on localhost.
+## What works offline, and limitations
 
-If the app is served from a **subdirectory** instead of the domain root, update manifest `id`, `start_url`, `scope`, icon URLs, and ensure Vite `base` is configured for the deployment path. This package defaults to root `/`.
+- The previously cached application UI, project and inspection records, HXC template builder and fillable report, signatures, local image entry, scoring, filtering and browser-local saves are designed to work offline on the **same device**.
+- New pages are made from the same locally bundled code. The service worker caches the app entry HTML and compiled JS/CSS, with a second asset-warming pass after the first load.
+- **No server sync exists.** Data saved offline in this version stays in browser storage. Do not clear site data, remove the installed app, or change browser profiles without first exporting a backup in Settings. Browser storage can still run out (especially with many photos); the app reports storage errors rather than claiming a save succeeded.
+- **OpenStreetMap tiles, live map search, GPS permissions, external links and any future server-backed functionality are not fully available offline.** The project map shows an offline notice, and manually entered coordinates and saved project locations remain available.
+- This archive does not include the project's npm dependency manifest or a full production browser environment. Run a production build and install/offline tests on each target device before release. No code change can guarantee zero exceptions on every device.
 
-## Installation behavior
+## Installation details
 
-- Android/Chromium: install button shows the browser prompt when `beforeinstallprompt` is available. If unavailable, a dialog explains manual installation.
-- iOS/iPadOS: browser APIs do not allow opening a native install prompt. The button shows Safari's Share > Add to Home Screen instructions.
-- Screen widths >900px: install button stays hidden even if the browser could install. When already installed in standalone mode, button stays hidden.
+- `public/manifest.webmanifest`: Harmonix name, icon, and Harmonix workspace as start URL.
+- `public/sw.js`: versioned shell and compiled asset cache, network-first document reload with offline fallback; no private inspection records are cached by the service worker.
+- `src/pwa.js`: registers service worker and warms downloaded static resources in production.
+- `src/app/App.jsx`, `src/app/routes.js`: direct default to Harmonix; explicit Admin links still work.
+- `src/app/AppErrorBoundary.jsx`: recovery UI for page render failures without deleting saved data.
+- `src/styles/pwa-readability.css`: local system-font stack and mobile legibility for templates and inspections.
+- `src/components/projects/ProjectLocationPicker.jsx`: offline fallback for map search and tiles.
+- `index.html`: removes third-party font downloads and sets Harmonix browser branding.
 
-## Offline behavior
-
-- A successful production visit caches the HTML shell and static assets; a subsequent visit can load the app offline.
-- Existing inspections and forms are currently stored in **browser-local storage**, not uploaded to a server. Offline changes remain on the same device/browser and can be lost if its site data is cleared. There is **no cross-device sync** and no automatic background upload.
-- Map tiles, geocoding, external URLs, server APIs and third-party fonts are not cached and require connectivity.
-- The service worker never caches inspection API requests or personally entered audit data.
-- The offline fallback screen appears if app assets are unavailable on a device's first offline use.
-
-## What changed
-
-- `src/pwa.js` (manifest injection, service worker registration, initial asset warming)
-- `src/components/pwa/InstallAppButton.jsx` (install prompt + iOS instructions)
-- `src/components/layout/Topbar.jsx` (mobile install control)
-- `src/main.jsx` (initialization + responsive CSS)
-- `src/features/templates/HxcReportDocument.jsx` (accessible per-cell labels)
-- `src/components/common/WorkspaceUI.jsx` (mobile inspection register labels)
-- `src/styles/pwa-mobile.css` (template studio, checklist forms, register, schedule, small-screen layout)
-- `public/manifest.webmanifest`, `public/sw.js`, `public/offline.html`, `public/icons/*`
+**Development:** PWA worker is intentionally registered only with production builds on HTTPS or localhost. Use `npm run build` + `npm run preview` for local install/offline testing.
