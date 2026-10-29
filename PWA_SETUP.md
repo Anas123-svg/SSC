@@ -34,6 +34,8 @@
 
 ## Brand and landing page
 
-The install/home-screen app label and icon use **Site Safety Consultants (SSC)** and the original SSC pink logo artwork provided with the source. The default in-app workspace is still **Harmonix**. These are intentionally separate: platform branding vs. client workspace.
+The installed app displays the name **SSC** and uses the original pink **SSC** logo on navy as its home-screen and launcher icon. **Site Safety Consultants** remains the full organization name in its description and page title. The default in-app workspace is still **Harmonix**. These are intentionally separate: platform branding vs. client workspace.
 
 If the previous installed icon remains, open the deployed app online, reload to activate the updated service worker, and allow the launcher to refresh its metadata. On iOS, removing and adding the home-screen icon again may be necessary for the new name and icon to appear.
+
+For an existing Harmonix-labelled installation: deploy this updated package, reopen the website online, and if the launcher still shows the old name/icon uninstall the old PWA and reinstall SSC. Device launchers can retain outdated icons/labels independently of web caches.

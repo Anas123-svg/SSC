@@ -42,7 +42,7 @@ export default function InstallAppButton() {
   const apple = isAppleMobile();
   return <>
     <button type="button" className="ssc-pwa-install" onClick={install} aria-label="Install SSC app" title="Install Site Safety Consultants on this device">
-      <Download size={17} strokeWidth={2}/><span>Install app</span>
+      <Download size={17} strokeWidth={2}/><span>Install SSC</span>
     </button>
     {help && <div className="ssc-pwa-modal-backdrop" onMouseDown={e => e.target === e.currentTarget && setHelp(false)}>
       <section className="ssc-pwa-modal" role="dialog" aria-modal="true" aria-labelledby="ssc-install-title">

@@ -1,6 +1,6 @@
 /* SSC PWA: cache only the application shell and same-origin static assets.
  * Local inspection records remain in browser storage, never in the SW cache. */
-const VERSION = 'ssc-pwa-v4-20261030';
+const VERSION = 'ssc-pwa-v5-20261030';
 const SHELL = `${VERSION}-shell`;
 const STATIC = `${VERSION}-static`;
 const SCOPE = new URL(self.registration.scope);

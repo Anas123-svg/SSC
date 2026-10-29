@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Site Safety Consultants",
+  "name": "SSC",
   "short_name": "SSC",
-  "description": "Site Safety Consultants \u2014 inspections, HXC compliance audits and project safety management.",
+  "description": "Site Safety Consultants (SSC) — inspections, HXC compliance audits and project safety management.",
   "start_url": "./#/workspace/harmonix/overview",
   "scope": "./",
   "display": "standalone",
