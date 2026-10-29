@@ -1,0 +1,166 @@
+/* PWA install is deliberately offered ONLY to small-screen devices. */
+.ssc-pwa-install{display:none;align-items:center;gap:7px;border:1px solid #f1ccda;border-radius:10px;background:#fff5f8;color:#c3456c;font-size:12px;font-weight:750;padding:9px 12px;min-height:38px;white-space:nowrap;cursor:pointer}
+.ssc-pwa-install:hover{background:#ffe8ef;border-color:#e8a9bf}
+.ssc-pwa-install:focus-visible,.ssc-pwa-modal button:focus-visible{outline:2px solid #c7486e;outline-offset:3px}
+@media screen and (max-width:900px){.ssc-pwa-install{display:inline-flex}}
+.ssc-pwa-modal-backdrop{position:fixed;inset:0;z-index:9000;background:#14283c99;display:grid;place-items:center;padding:18px;box-sizing:border-box}
+.ssc-pwa-modal{position:relative;width:min(100%,400px);background:#fff;border-radius:18px;padding:26px;box-shadow:0 20px 90px #14283c33;box-sizing:border-box;color:#25364a}
+.ssc-pwa-modal-icon{background:#fff0f5;color:#c3466c;display:grid;place-items:center;border-radius:12px;width:48px;height:48px;margin-bottom:13px}
+.ssc-pwa-modal h2{font-size:19px;margin:0 25px 10px 0;line-height:1.3}.ssc-pwa-modal p,.ssc-pwa-modal li{font-size:13px;line-height:1.65;color:#63758a}.ssc-pwa-modal ol{padding-left:23px}.ssc-pwa-modal li{margin-bottom:10px}.ssc-pwa-modal li svg{vertical-align:middle}.ssc-pwa-hint{font-size:11px!important}
+.ssc-pwa-close{position:absolute;right:16px;top:16px;background:transparent;border:0;color:#8796a8;cursor:pointer;padding:6px}.ssc-pwa-done{border:0;background:#d74b72;color:white;border-radius:9px;padding:11px 20px;font-weight:650;cursor:pointer;min-height:42px}
+
+/* All mobile content stays within the usable viewport; only tables that truly
+   need extra columns can scroll independently. */
+@media screen and (max-width:900px){
+ .shell,.right-shell,.content,.workspace-page,.sw-page,.ix-page,.sx-page,.pd-page{min-width:0;max-width:100%;}
+ .content{overflow-x:clip;}
+ .hxstudio-workspace,.hxstudio-canvas,.hxstudio-sidebar,.hxstudio-field-editor,.hxstudio-block-info,.hxstudio-properties,.hxstudio-section-fields{min-width:0;max-width:100%}
+ .hxstudio-block-info strong,.hxstudio-block-info small{overflow-wrap:anywhere;word-break:normal;white-space:normal;}
+ .hxstudio-section-nav{-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;}
+ .hxstudio-section-link{scroll-snap-align:start;}
+ .hxstudio-modebar{scrollbar-width:thin;}
+ .hxstudio-table-demo{overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin}
+ .hxstudio-preview-screen .hwd-document{max-width:100%;}
+ .hwd-inspection-toolbar,.hwd-document,.hwd-word-page,.hwd-inspection-page,.hwd-audit-section{min-width:0;max-width:100%;box-sizing:border-box;}
+ .hwd-table-wrap,.sw-table-scroll,.ix-table-container .table-scroll{scrollbar-width:thin;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;}
+ .sw-project-grid,.sw-analytics-grid{grid-template-columns:minmax(0,1fr)}
+ .sw-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sw-paper,.sw-inspection .sw-paper{padding:18px}
+ .sw-layout{grid-template-columns:minmax(0,1fr)}
+ .sw-tabs,.pd-tabs{max-width:100%;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;}
+}
+@media screen and (max-width:700px){
+ /* Mobile PWA navigation */
+ .topbar{gap:8px;min-width:0}
+ .crumb{min-width:0;max-width:calc(100% - 146px);overflow:hidden;}
+ .crumb>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .crumb strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:42vw}
+ .top-tools{flex-shrink:0}
+ .top-tools .search{flex:0 0 36px}
+ .top-tools .search:focus-within{right:101px;width:calc(100vw - 164px)}
+ .ssc-pwa-install{width:39px;height:39px;min-height:39px;justify-content:center;padding:0}
+ .ssc-pwa-install span{display:none}
+ .ssc-pwa-modal{padding:22px}
+ /* Template builder: one-column editor, scrollable section chips, safe controls */
+ .hxstudio-hero{padding:15px;gap:10px}
+ .hxstudio-hero h1{font-size:19px}
+ .hxstudio-hero-actions{width:100%;justify-content:flex-start;gap:8px}
+ .hxstudio-workspace{display:block}
+ .hxstudio-sidebar{position:static;margin-bottom:12px}
+ .hxstudio-section-nav{display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;max-height:none;padding:0 10px 10px;gap:7px}
+ .hxstudio-section-link{flex:0 0 175px;min-width:175px;max-width:190px}
+ .hxstudio-canvas-head{padding:16px}
+ .hxstudio-section-fields{grid-template-columns:1fr;margin:0 14px;padding-bottom:16px}
+ .hxstudio-block-list{padding:11px 10px}
+ .hxstudio-block-line{align-items:flex-start;flex-wrap:wrap;gap:9px}
+ .hxstudio-block-info{flex:1 1 55%;min-width:0}
+ .hxstudio-block-actions{display:flex;width:100%;justify-content:flex-end;gap:3px}
+ .hxstudio-block-actions button{min-height:35px;min-width:35px}
+ .hxstudio-field-editor{padding:12px}
+ .hxstudio-properties{grid-template-columns:1fr}
+ .hxstudio-options,.hxstudio-table-settings,.hxstudio-child-layout{padding:10px}
+ .hxstudio-option-line{display:grid;grid-template-columns:20px minmax(0,1fr) 30px 30px 30px;gap:3px}
+ .hxstudio-column-tools{min-width:150px}
+ .hxstudio-table-bottom{flex-wrap:wrap}
+ .hxstudio-add-content{padding:14px}
+ .hxstudio-add-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .hxstudio-add-chip{min-width:0;justify-content:center}
+ .hxstudio-add-more{grid-column:1/-1;display:flex}
+ .hxstudio-add-more select{min-width:0;flex:1;max-width:none}
+ .hxstudio-preview-banner,.hxstudio-settings-intro{padding:15px}
+ .hxstudio-preview-screen .hwd-word-page{padding:15px}
+ /* Inspection documents: instead of a 780px table on a 375px screen,
+    show each audit requirement as a vertical fillable card. */
+ .hwd-document{border-radius:12px!important;box-shadow:none!important;overflow:visible!important}
+ .hwd-word-page{padding:18px 13px!important;font-size:13px}
+ .hwd-report-title{margin-bottom:20px}
+ .hwd-report-title h1{font-size:20px!important;line-height:1.25}
+ .hwd-report-title p{font-size:12px!important}
+ .hwd-document h2{font-size:16px!important}
+ .hwd-audit-section{margin-bottom:28px}
+ .hwd-checklist-table,.hwd-summary-table,.hwd-action-table,.hwd-photos-table{display:block;width:100%;min-width:0!important;max-width:100%;border:0;background:transparent;table-layout:auto}
+ .hwd-checklist-table thead,.hwd-summary-table thead,.hwd-action-table thead,.hwd-photos-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;clip-path:inset(50%)}
+ .hwd-checklist-table tbody,.hwd-summary-table tbody,.hwd-action-table tbody,.hwd-photos-table tbody{display:block;width:100%}
+ .hwd-checklist-table tbody tr,.hwd-summary-table tbody tr,.hwd-action-table tbody tr,.hwd-photos-table tbody tr{display:block;width:100%;box-sizing:border-box;border:1px solid #e0e7ef;background:white;border-radius:10px;overflow:hidden;margin-bottom:11px;box-shadow:0 1px 3px #182d4110}
+ .hwd-checklist-table tbody td,.hwd-summary-table tbody td,.hwd-action-table tbody td,.hwd-photos-table tbody td{display:block!important;box-sizing:border-box;width:100%!important;max-width:100%;height:auto;min-height:0;padding:10px 12px!important;border:0!important;border-bottom:1px solid #edf0f5!important;overflow-wrap:anywhere}
+ .hwd-checklist-table tbody td:last-child,.hwd-summary-table tbody td:last-child,.hwd-action-table tbody td:last-child,.hwd-photos-table tbody td:last-child{border-bottom:0!important}
+ .hwd-checklist-table td::before,.hwd-summary-table td::before,.hwd-action-table td::before,.hwd-photos-table td::before{content:attr(data-label);display:block;margin-bottom:5px;color:#75859a;font-size:10px;font-weight:750;letter-spacing:.15px}
+ .hwd-checklist-table .hwd-ref,.hwd-photos-table .hwd-ref{text-align:left}
+ .hwd-checklist-table tbody td:first-child{background:#f5f7fb;color:#33557d;font-weight:750;padding:7px 12px!important}
+ .hwd-checklist-table tbody td:first-child::before{display:none}
+ .hwd-checklist-table .hwd-section-score td:first-child,.hwd-summary-table .hwd-summary-total td:first-child{background:#244b75!important;color:#fff!important}
+ .hwd-checklist-table .hwd-section-score td:first-child::before,.hwd-summary-table .hwd-summary-total td:first-child::before{display:none}
+ .hwd-checklist-table select,.hwd-checklist-table input,.hwd-summary-table input,.hwd-action-table input,.hwd-photos-table input:not([type=file]){box-sizing:border-box;width:100%;max-width:100%;min-height:42px!important;padding:8px 10px!important;border:1px solid #dce4ed!important;border-radius:7px!important;background:#fff!important;font-size:16px!important;color:#293b50}
+ .hwd-table .hwd-requirement{font-size:12px;line-height:1.6}
+ .hwd-signature-field{min-width:0}
+ .hwd-signature-field canvas{height:120px;touch-action:none}
+ .hwd-bottom-toolbar,.hwd-toolbar-actions{width:100%;justify-content:stretch;align-items:stretch}
+ .hwd-bottom-toolbar .sw-btn,.hwd-toolbar-actions .sw-btn{flex:1 1 145px;min-height:44px}
+ .hwd-workspace-picker,.hwd-workspace-picker label{width:100%;display:block}
+ .hwd-workspace-picker select{max-width:100%;width:100%;margin-top:8px}
+ /* Metadata and signoffs are label-and-answer pairs, never wide clipped rows. */
+ .hwd-metadata-table,.hwd-signoff-table,.hwd-method-table{display:block;min-width:0!important;width:100%;border:0}
+ .hwd-metadata-table tbody,.hwd-signoff-table tbody,.hwd-method-table tbody{display:block}
+ .hwd-metadata-table tr,.hwd-signoff-table tr,.hwd-method-table tr{display:grid;grid-template-columns:minmax(0,1fr);margin-bottom:10px;border:1px solid #e1e7ef;border-radius:9px;overflow:hidden}
+ .hwd-metadata-table th,.hwd-metadata-table td,.hwd-signoff-table th,.hwd-signoff-table td,.hwd-method-table th,.hwd-method-table td{display:block;box-sizing:border-box;width:100%!important;min-width:0;height:auto;padding:8px 12px!important;border:0!important}
+ .hwd-metadata-table th,.hwd-signoff-table th,.hwd-method-table th{background:#f0f4f9!important;color:#334e70!important;font-weight:700}
+ .hwd-metadata-table td,.hwd-signoff-table td{min-height:43px}
+ .hwd-metadata-table input,.hwd-metadata-table select,.hwd-signoff-table input{font-size:16px!important;min-height:38px!important}
+ .hwd-bands{min-width:450px!important}
+ .hwd-method{margin-bottom:28px}
+ /* Inspection register: native card layout preserving the same actions. */
+ .ix-page .ix-table-container .table-scroll{overflow:visible;border:0}
+ .ix-page .ix-table-container .audit-table{display:block;width:100%;min-width:0;border:0}
+ .ix-page .ix-table-container .audit-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
+ .ix-page .ix-table-container .audit-table tbody{display:grid;grid-template-columns:1fr;gap:10px}
+ .ix-page .ix-table-container .audit-table tr{display:block;width:100%;border:1px solid #e5eaf1;border-radius:11px;background:#fff;overflow:hidden;padding:7px 12px;box-sizing:border-box}
+ .ix-page .ix-table-container .audit-table td{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px;padding:8px 0!important;border-bottom:1px solid #f1f3f6!important;font-size:12px;min-width:0}
+ .ix-page .ix-table-container .audit-table td:last-child{border:0!important;justify-content:flex-end}
+ .ix-page .ix-table-container .audit-table td::before{content:attr(data-label);color:#8190a1;font-size:10px;font-weight:700;flex:0 0 auto}
+ .ix-page .ix-table-container .audit-table td:first-child{display:block}
+ .ix-page .ix-table-container .audit-table td:first-child::before{display:none}
+ .ix-page .ix-record-cell{min-width:0}
+ .ix-page .ix-project-cell{max-width:66%;overflow-wrap:anywhere}
+ /* The project-specific inspection list uses the same clean card format. */
+ .pd-page .pd-table{overflow:visible;padding:6px 12px 12px}
+ .pd-page .pd-table .table-scroll{overflow:visible}
+ .pd-page .pd-table .audit-table{display:block;min-width:0;width:100%}
+ .pd-page .pd-table .audit-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ .pd-page .pd-table .audit-table tbody{display:grid;grid-template-columns:1fr;gap:10px}
+ .pd-page .pd-table .audit-table tbody tr{display:block;max-width:100%;border:1px solid #e7ebf1;border-radius:11px;overflow:hidden;background:white;padding:6px 12px}
+ .pd-page .pd-table .audit-table td{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;padding:9px 0!important;border-bottom:1px solid #eff2f6!important;min-width:0}
+ .pd-page .pd-table .audit-table td:last-child{border-bottom:0!important;justify-content:flex-end}
+ .pd-page .pd-table .audit-table td::before{content:attr(data-label);font-size:10px;font-weight:700;color:#8896a6}
+ .pd-page .pd-table .audit-table td:first-child::before{display:none}
+ /* Forms and filters */
+ .sw-meta-grid,.sw-facts{grid-template-columns:minmax(0,1fr)}
+ .sw-stats{gap:8px}.sw-stats article{padding:14px}
+ .sw-inspection .sw-paper{padding:15px}
+ .sw-choices label{min-height:36px}
+ .sw-choices input{min-width:17px;min-height:17px}
+ .sw-table-field{overflow-x:auto}
+ .sw-toolbar .sw-search,.sw-toolbar>select{flex:1 1 100%;min-width:0}
+ .ix-filters label{flex:1 1 calc(50% - 8px);min-width:0}
+ .ix-filters input,.ix-filters select{min-height:43px;font-size:16px}
+ /* Seven columns actually fit on a phone; appointments are summarized as a number badge. */
+ .sx-calendar-scroll{overflow:visible}
+ .sx-calendar{grid-template-columns:repeat(7,minmax(0,1fr));min-width:0!important;width:100%}
+ .sx-weekday{font-size:9px;padding:9px 0;letter-spacing:0}
+ .sx-day{min-height:64px!important;padding:6px 2px;text-align:center}
+ .sx-day-number{min-width:29px;height:29px;font-size:12px}
+ .sx-day-events,.sx-more{display:none!important}
+ .sx-mobile-count{display:grid;place-items:center;margin:2px auto 0;min-width:20px;height:18px;border:0;background:#fce5ed;color:#ba3f63;border-radius:9px;font-size:10px;font-weight:750;padding:0 5px}
+ .sx-calendar-toolbar{padding:11px 10px;gap:7px}
+ .sx-calendar-heading h3{font-size:14px}
+ .sx-calendar-navigation{gap:3px}
+ .sx-day-panel-events{max-height:none}
+}
+@media screen and (max-width:380px){
+ .hxstudio-hero-actions{flex-direction:column;align-items:stretch}
+ .hxstudio-add-buttons{grid-template-columns:1fr 1fr}
+ .sx-day-number{min-width:25px;height:25px}
+ .sx-calendar-navigation button{height:30px;width:30px}
+ .sx-calendar-navigation button.sx-today{padding:0 5px;font-size:10px}
+}
+/* Printed reports retain tabular structure and hide installation UI. */
+@media print{.ssc-pwa-install,.ssc-pwa-modal-backdrop{display:none!important}}

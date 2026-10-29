@@ -75,8 +75,8 @@ function ChecklistTable({ section, number, answers, setAnswer, disabled, config 
   const includes = id => columns.some(col=>col.id === id);
   return <><div className="hwd-table-wrap"><table className="hwd-table hwd-checklist-table">
     <thead><tr>{columns.map(col=><th key={col.id}>{col.label}</th>)}</tr></thead>
-    <tbody>{(section.blocks || []).map(block => <tr key={block.id}>{columns.map(col=><td key={col.id}>{renderCell(col,block)}</td>)}</tr>)}
-      <tr className="hwd-section-score">{columns.map((col,i) => <td key={col.id}>
+    <tbody>{(section.blocks || []).map(block => <tr key={block.id}>{columns.map(col=><td key={col.id} data-label={col.label}>{renderCell(col,block)}</td>)}</tr>)}
+      <tr className="hwd-section-score">{columns.map((col,i) => <td key={col.id} data-label={col.label}>
         {col.id === 'requirement' || i === 0 ? `SECTION ${number} ${config.sectionScoreLabel}` : null}
         {col.id === 'compliance' ? <ScoreField section={section} answers={answers} setAnswer={setAnswer} disabled={disabled}/> : null}
         {col.id === 'evidence' ? <Input ariaLabel={`Auditor rationale for ${section.title}`} value={answers[`section:${section.id}:rationale`]} set={v=>setAnswer(`section:${section.id}:rationale`,v)} disabled={disabled} placeholder="Rationale:"/> : null}
@@ -114,8 +114,8 @@ function SummaryTable({schema,answers,setAnswer,disabled,config}) {
   };
   return <><div className="hwd-table-wrap"><table className="hwd-table hwd-summary-table">
     <thead><tr>{config.summaryColumns.map(c=><th key={c.id}>{c.label}</th>)}</tr></thead>
-    <tbody>{schema.map(s=><tr key={s.id}>{config.summaryColumns.map(col=><td key={col.id}>{cell(s,col)}</td>)}</tr>)}
-      <tr className="hwd-summary-total">{config.summaryColumns.map((col,i)=><td key={col.id}>{col.id === 'score' ? (score == null ? '— %' : `${score}%`) : col.id === 'concern' ? <>Overall rating: <strong>{overallRating(score)}</strong></> : col.id === 'open' ? `Total open: ${knownOpen}` : i === 0 ? 'OVERALL COMPLIANCE SCORE' : ''}</td>)}</tr>
+    <tbody>{schema.map(s=><tr key={s.id}>{config.summaryColumns.map(col=><td key={col.id} data-label={col.label}>{cell(s,col)}</td>)}</tr>)}
+      <tr className="hwd-summary-total">{config.summaryColumns.map((col,i)=><td key={col.id} data-label={col.label}>{col.id === 'score' ? (score == null ? '— %' : `${score}%`) : col.id === 'concern' ? <>Overall rating: <strong>{overallRating(score)}</strong></> : col.id === 'open' ? `Total open: ${knownOpen}` : i === 0 ? 'OVERALL COMPLIANCE SCORE' : ''}</td>)}</tr>
     </tbody>
   </table></div>
   <label className="hwd-long-note"><strong>{config.positiveLabel}</strong><textarea rows={3} disabled={disabled} value={nullable(answers['summary:positive'])} onChange={e=>setAnswer('summary:positive',e.target.value)}/></label>
@@ -128,7 +128,7 @@ function ActionTracker({answers,setAnswer,disabled,config}) {
   return <><div className="hwd-table-wrap"><table className="hwd-table hwd-action-table">
     <thead><tr>{config.trackerColumns.map(c=><th key={c.id}>{c.label}</th>)}</tr></thead>
     <tbody>{Array.from({length:rows},(_,i)=><tr key={i}>{config.trackerColumns.map(col=>
-      <td key={col.id}>{col.id === 'ref' ? <span className="hwd-ref">{i+1}</span> : <Input type={col.type || (['target','closeout'].includes(col.id) ? 'date' : 'text')} ariaLabel={`Corrective action ${i+1}, ${col.label}`} value={answers[`action:${i+1}:${col.id}`]} set={v=>setAnswer(`action:${i+1}:${col.id}`,v)} disabled={disabled}/>}</td>)}</tr>)}</tbody>
+      <td key={col.id} data-label={col.label}>{col.id === 'ref' ? <span className="hwd-ref">{i+1}</span> : <Input type={col.type || (['target','closeout'].includes(col.id) ? 'date' : 'text')} ariaLabel={`Corrective action ${i+1}, ${col.label}`} value={answers[`action:${i+1}:${col.id}`]} set={v=>setAnswer(`action:${i+1}:${col.id}`,v)} disabled={disabled}/>}</td>)}</tr>)}</tbody>
   </table></div>{!disabled && <button type="button" className="hwd-inline-action" onClick={()=>{setExtraRows(x=>x+1);setAnswer('actions:extraRows',rows+1-Number(config.trackerRows || 12));}}>+ Add corrective action row</button>}</>;
 }
 
@@ -145,11 +145,11 @@ function PhotoCell({index,answers,setAnswer,disabled,config}) {
     catch(e) { setError(e.message || 'Could not attach photo.'); }
   };
   return <tr>{config.appendixColumns.map(col=>{
-    if (col.id === 'ref') return <td key={col.id} className="hwd-ref">{number}</td>;
-    if (col.id === 'photo') return <td key={col.id} className="hwd-photo-cell">{img && <img src={img} alt={`Appendix ${number} evidence`} className="hwd-photo-preview"/>}
+    if (col.id === 'ref') return <td key={col.id} data-label={col.label} className="hwd-ref">{number}</td>;
+    if (col.id === 'photo') return <td key={col.id} data-label={col.label} className="hwd-photo-cell">{img && <img src={img} alt={`Appendix ${number} evidence`} className="hwd-photo-preview"/>}
       {!disabled && <div className="hwd-photo-actions"><label className="hwd-upload">{img ? 'Replace photo' : 'Choose photo'}<input type="file" accept="image/*" onChange={add}/></label>{img && <button type="button" onClick={()=>setAnswer(imageKey,'')}>Remove</button>}</div>}
       {error && <small className="hwd-photo-error" role="alert">{error}</small>}</td>;
-    return <td key={col.id}><Input type={col.type || 'text'} ariaLabel={`${col.label} for appendix ${number}`} value={answers[`appendix:${number}:${col.id}`]} set={v=>setAnswer(`appendix:${number}:${col.id}`,v)} disabled={disabled} placeholder={col.id === 'item' ? 'Item ref.' : ''}/></td>;
+    return <td key={col.id} data-label={col.label}><Input type={col.type || 'text'} ariaLabel={`${col.label} for appendix ${number}`} value={answers[`appendix:${number}:${col.id}`]} set={v=>setAnswer(`appendix:${number}:${col.id}`,v)} disabled={disabled} placeholder={col.id === 'item' ? 'Item ref.' : ''}/></td>;
   })}</tr>;
 }
 

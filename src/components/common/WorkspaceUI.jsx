@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Plus, X, FolderOpen } from 'lucide-react';
 import { MODULES } from '../../app/moduleRegistry.js';
 export function EmptyState({ title = 'No records yet', description = 'Add the first record to get started.', action }) { return <div className="empty"><FolderOpen size={26}/><strong>{title}</strong><p>{description}</p>{action}</div>; }
-export function DataTable({ columns, rows, empty }) { return <div className="table-scroll"><table className="audit-table"><thead><tr>{columns.map(c => <th key={c.label}>{c.label}</th>)}</tr></thead><tbody>{rows.map(row => <tr key={row.id}>{columns.map(c => <td key={c.label}>{c.render ? c.render(row) : row[c.key] || '—'}</td>)}</tr>)}</tbody></table>{!rows.length && (empty || <EmptyState />)}</div>; }
+export function DataTable({ columns, rows, empty }) { return <div className="table-scroll"><table className="audit-table"><thead><tr>{columns.map(c => <th key={c.label}>{c.label}</th>)}</tr></thead><tbody>{rows.map(row => <tr key={row.id}>{columns.map(c => <td key={c.label} data-label={c.label}>{c.render ? c.render(row) : row[c.key] || '—'}</td>)}</tr>)}</tbody></table>{!rows.length && (empty || <EmptyState />)}</div>; }
 export const Button = ({ children, primary, ...props }) => <button type="button" className={'btn ' + (primary ? 'primary' : 'outline')} {...props}>{children}</button>;
 export function FormModal({ title, close, children }) {
   const ref = useRef(null);
