@@ -1,0 +1,70 @@
+/* SITE SAFETY CONSULTANTS | HXC client audit workspace
+   Brand pink #EE3861 from the supplied transparent SSC artwork.
+   Bright but readable raspberry sidebar and pure-white content surfaces. */
+:root {
+  --pink:#EE3861;
+  --ssc-pink:#EE3861;
+  --ssc-sidebar:#CB244F;
+  --ssc-sidebar-hover:#BE1E47;
+  --ssc-text:#232932;
+  --ssc-line:#E9E9ED;
+  --ink:#232932;
+  --line:#E9E9ED;
+  --hxc-pink:#EE3861;
+  font-family:Inter,'Segoe UI',Arial,sans-serif;
+  color:var(--ssc-text);
+  background:#FFFFFF;
+}
+html,body,#root,.shell,.right-shell,.content,.topbar,.footer {background:#FFFFFF;color:var(--ssc-text)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #F6A6BA;outline-offset:2px}
+.sidebar {
+ background:var(--ssc-sidebar);color:white;scrollbar-color:#F19FB4 transparent;
+ box-shadow:inset -1px 0 rgba(99,10,38,.10);
+}
+.sidebar .brand {background:#FFFFFF;padding:24px 19px 20px;margin:0 0 15px;border-bottom:1px solid #F3E1E6}
+.sidebar .brand-logo {width:205px;height:49px;background:transparent;border:0;border-radius:0;box-shadow:none;margin:0;padding:0;display:flex;align-items:center;justify-content:flex-start}
+.sidebar .brand-logo img {width:205px;height:auto;max-width:100%;object-fit:contain;object-position:left center;display:block}
+.sidebar .brand-subtitle {margin-top:12px;font-size:9px;font-weight:700;letter-spacing:1.15px;color:#59606B}
+.sidebar .brand-tag {display:none}
+.sidebar .sidebar-context {background:rgba(103,13,40,.18);border:1px solid rgba(255,255,255,.21);color:white;margin:0 13px 18px;}
+.sidebar .sidebar-context svg {color:#FFE9EF}
+.sidebar .nav-label {color:#FFCFDB;font-size:9px;letter-spacing:1.25px}
+.sidebar .nav-link {color:#FFF4F6;font-weight:540;border-radius:6px;height:39px}
+.sidebar .nav-link:hover {background:rgba(255,255,255,.13);color:white}
+.sidebar .nav-link.selected {background:white;color:#9D173D;box-shadow:0 1px 2px #66112618;font-weight:750}
+.sidebar .nav-link.selected svg {color:#B21C47}
+.sidebar .nav-link em {background:rgba(255,255,255,.17);color:#fff}
+.sidebar .nav-link.selected em {background:#FCE7ED;color:#A91D46}
+.sidebar .profile {border-color:rgba(255,255,255,.26)}
+.sidebar .profile-initials {background:#FFFFFF;color:#A71E44}
+.sidebar .profile strong {color:#FFFFFF}
+.sidebar .profile small,.sidebar .profile>svg {color:#FFE1E9}
+.topbar {border-bottom:1px solid #ECECF0;background:white}
+.crumb strong {color:#35404C}
+.content {background:#FFFFFF}
+.footer {background:#FFFFFF;border-top:1px solid #EEEFF2}
+.page-title h1 {color:#242A32}
+.btn.primary,.hxc-btn.primary {background:#EE3861;border-color:#EE3861;color:white;box-shadow:none}
+.btn.primary:hover,.hxc-btn.primary:hover:not(:disabled){background:#CE2853;border-color:#CE2853}
+.btn.outline:hover {border-color:#F0ACBD;background:#FFF6F8}
+.search:focus-within {border-color:#EE89A2}
+.avatar-button .avatar {color:#A51E44;background:#FFE6ED!important}
+.simple-metric.tone-pink .simple-metric-value,.overview-clean .text-link,.overview-bottom-note button,
+.overview-clean .clean-action-list>button:hover .clean-action-main strong {color:#D72D59}
+.panel,.overview-summary,.simple-metric,.hxc-page .hxc-intro,.hxc-page .hxc-mini-metrics>div {border-color:#EBEBEF}
+.pill-demo {background:#FFF4E9}
+.hxc-page {--hxc-pink:#EE3861;--hxc-teal:#C82956;--hxc-navy:#293441;--hxc-line:#E9EAEE;color:#26303B}
+.hxc-page .hxc-eyebrow,.hxc-page .hxc-intro .hxc-eyebrow {color:#B42650}
+.hxc-score-panel {background:#FFF7F9;border-color:#F7D9E2}
+.hxc-photo-add{border-color:#EFB4C5;color:#BF2851;background:#FFF5F8}
+.hxc-photo-add:hover {background:#FFEAF0}
+.hxc-step.selected,.hxc-step.active {border-color:#EFA8BB}
+.hxc-final-icon{background:#FCE5EB;color:#CE2B57}
+.hxc-sign-card>span,.hxc-action-ref,.hxc-score-header>span{color:#CE2B57}
+.hxc-tick input{accent-color:#EE3861}
+/* Safety statuses retain red for critical and amber for warnings. */
+@media(max-width:830px){.sidebar .brand-logo{width:205px;height:49px}.sidebar .brand-logo img{width:205px}}
+
+/* Neutral charcoal replaces the earlier Harmonix navy in the inspector's section header. */
+.hxc-page .hxc-current-banner{background:#2D343D}
+.hxc-page .hxc-current-banner>div:first-child span{color:#F7BDC9}

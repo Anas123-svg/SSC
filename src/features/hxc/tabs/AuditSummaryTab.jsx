@@ -1,0 +1,13 @@
+import React from 'react';
+import { ArrowRight, ChevronLeft } from 'lucide-react';
+import { hxcTemplate } from '../hxcTemplate.js';
+import { sectionByItem, scoreLabel } from '../hxcModel.js';
+import { Button, Chip } from '../components/HxcUI.jsx';
+import { useHxcEditor } from '../HxcEditorContext.jsx';
+
+export default function AuditSummaryTab() {
+  const { active, readOnly, stats, setTab, setSelectedSection, updateField } = useHxcEditor();
+  return (
+    <section className="hxc-white-section"><div className="hxc-body-title"><div><span>11 / AUDIT SUMMARY</span><h3>Performance at a glance.</h3><p>Automatically calculated from the applicable section scores in Tony's HXC methodology.</p></div></div><div className="hxc-summary-top"><div><span>Overall compliance</span><strong>{stats.score == null ? '—' : stats.score.toFixed(1) + '%'}</strong><small>{stats.score == null ? 'No sections scored' : scoreLabel(stats.score / 10)}</small></div><div><span>Sections scored</span><strong>{stats.applicable} <small>/10</small></strong><small>N/A sections excluded</small></div><div><span>Open actions</span><strong>{stats.open}</strong><small>{stats.issues} MI / MA findings</small></div></div><div className="hxc-table-wrap"><table className="hxc-report-table"><thead><tr><th>SECTION</th><th>SCORE / 10</th><th>KEY CONCERN / STRENGTH</th><th>OPEN ACTIONS</th></tr></thead><tbody>{hxcTemplate.map(s => { const ss = active.sections?.[s.id] || {}; return <tr key={s.id}><td><strong>{s.id.toString().padStart(2, '0')}</strong> {s.title}</td><td><Chip tone={ss.na ? 'neutral' : ss.score >= 7 ? 'success' : 'draft'}>{ss.na ? 'N/A' : ss.score == null ? '—' : ss.score + '/10'}</Chip></td><td>{ss.strength || ss.rationale || '—'}</td><td>{(active.actions || []).filter(x => x.status !== 'Closed' && sectionByItem[x.itemId]?.id === s.id).length}</td></tr> ;})}</tbody></table></div><div className="hxc-form-stack"><label className="hxc-field"><span>Key positive observations</span><textarea disabled={readOnly} rows={4} placeholder="Record important positive site observations..." value={active.positives} onChange={e => updateField('positives', e.target.value)} /></label><label className="hxc-field"><span>Priority concerns and immediate actions</span><textarea disabled={readOnly} rows={4} placeholder="Record urgent and priority issues..." value={active.priorities} onChange={e => updateField('priorities', e.target.value)} /></label></div><div className="hxc-bottom-actions"><Button onClick={() => { setTab('section'); setSelectedSection(10) ;}} icon={ChevronLeft}>Previous</Button><Button variant="primary" onClick={() => setTab('actions')}>Corrective actions <ArrowRight size={16} /></Button></div></section>
+  );
+}

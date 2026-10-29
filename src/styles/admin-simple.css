@@ -1,0 +1,36 @@
+/* Bare-minimum Admin workspace. All selectors are scoped; client pages retain their design. */
+.ssc-admin-simple { max-width: 1240px; width: 100%; margin: 0 auto; gap: 22px; }
+.ssc-admin-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+.ssc-admin-kicker { display: block; font-size: 10px; color: #c1466a; font-weight: 750; letter-spacing: .13em; margin-bottom: 9px; }
+.ssc-admin-heading h1 { margin: 0 0 7px; font-size: clamp(22px, 2.4vw, 29px); letter-spacing: -.6px; font-weight: 750; color: #1e293b; }
+.ssc-admin-heading p { margin: 0; font-size: 13px; color: #758296; line-height: 1.5; }
+.ssc-admin-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.ssc-admin-stat, .ssc-admin-panel { border: 1px solid #e7ebf1; background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(30,42,64,.025); min-width: 0; }
+.ssc-admin-stat { padding: 19px 21px; }
+.ssc-admin-stat > span { display: flex; justify-content: space-between; align-items: center; color: #718096; font-size: 12px; font-weight: 600; gap: 10px; }
+.ssc-admin-stat > span svg { color: #b4bdca; }
+.ssc-admin-stat > strong { display: block; margin-top: 12px; font-size: 30px; line-height: 1.1; color: #25344a; letter-spacing: -.8px; }
+.ssc-admin-panel { overflow: hidden; }
+.ssc-admin-panel-heading { padding: 20px 22px; display: flex; justify-content: space-between; align-items: center; gap: 14px; border-bottom: 1px solid #edf0f4; }
+.ssc-admin-panel-heading h2, .ssc-admin-backup h2 { margin: 0; font-size: 16px; color: #233046; letter-spacing: -.25px; }
+.ssc-admin-panel-heading p, .ssc-admin-backup p { margin: 5px 0 0; font-size: 12px; color: #8490a2; }
+.ssc-admin-text-link, .ssc-admin-open, .ssc-admin-quiet-button { border: none; background: transparent; cursor: pointer; font-size: 12px; font-weight: 650; display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 8px 9px; border-radius: 8px; white-space: nowrap; }
+.ssc-admin-text-link, .ssc-admin-open { color: #d0446c; }
+.ssc-admin-quiet-button { color: #5d6c81; }
+.ssc-admin-text-link:hover, .ssc-admin-open:hover, .ssc-admin-quiet-button:hover { background: #f6f7fa; }
+.ssc-admin-open:disabled { opacity: .4; cursor: not-allowed; }
+.ssc-admin-item { display: flex; align-items: center; padding: 15px 20px; gap: 13px; border-bottom: 1px solid #f0f2f5; min-width: 0; }
+.ssc-admin-item:last-child { border-bottom: none; }
+.ssc-admin-item-icon { width: 39px; height: 39px; flex: 0 0 39px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: #f5f1f5; color: #bd5273; }
+.ssc-admin-item-info { display: flex; flex-direction: column; min-width: 0; flex: 1; gap: 5px; }
+.ssc-admin-item-info strong { color: #2d394c; font-size: 13px; font-weight: 700; overflow-wrap: anywhere; }
+.ssc-admin-item-info small { color: #8793a3; font-size: 11px; overflow-wrap: anywhere; }
+.ssc-admin-state { flex: 0 0 auto; font-size: 11px; font-weight: 650; background: #eff8f2; color: #387851; border-radius: 20px; padding: 6px 10px; }
+.ssc-admin-state.inactive { color: #7c8695; background: #f3f4f6; }
+.ssc-admin-item-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 3px; }
+.ssc-admin-empty { padding: 34px 20px; margin: 0; text-align: center; color: #8691a2; font-size: 13px; }
+.ssc-admin-disclaimer { margin: -4px 0 0; font-size: 11px; color: #8994a5; line-height: 1.6; }
+.ssc-admin-backup { padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.ssc-admin-backup small { display: flex; align-items: center; gap: 7px; margin-top: 15px; font-size: 11px; color: #8b95a4; }
+@media(max-width: 760px) { .ssc-admin-stats { grid-template-columns: repeat(2, minmax(0,1fr)); } .ssc-admin-item { flex-wrap: wrap; } .ssc-admin-item-actions { flex-basis: 100%; justify-content: flex-end; } .ssc-admin-backup { align-items: flex-start; flex-direction: column; } }
+@media(max-width: 480px) { .ssc-admin-stats { grid-template-columns: 1fr; } .ssc-admin-item-info { flex-basis: calc(100% - 68px); } .ssc-admin-state { margin-left: auto; } .ssc-admin-open { margin-left: auto; } .ssc-admin-panel-heading { padding: 16px; } .ssc-admin-item { padding: 13px; } }
