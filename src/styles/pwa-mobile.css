@@ -3,8 +3,10 @@
 .ssc-pwa-install:hover{background:#ffe8ef;border-color:#e8a9bf}
 .ssc-pwa-install:focus-visible,.ssc-pwa-modal button:focus-visible{outline:2px solid #c7486e;outline-offset:3px}
 @media screen and (max-width:900px){.ssc-pwa-install{display:inline-flex}}
+/* iPad, including larger landscape iPads, counts as a mobile device. */
+@media screen and (hover:none) and (pointer:coarse) and (min-width:901px) and (max-width:1366px){.ssc-pwa-install.is-apple{display:inline-flex}}
 .ssc-pwa-modal-backdrop{position:fixed;inset:0;z-index:9000;background:#14283c99;display:grid;place-items:center;padding:18px;box-sizing:border-box}
-.ssc-pwa-modal{position:relative;width:min(100%,400px);background:#fff;border-radius:18px;padding:26px;box-shadow:0 20px 90px #14283c33;box-sizing:border-box;color:#25364a}
+.ssc-pwa-modal{position:relative;width:min(100%,420px);max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain;background:#fff;border-radius:18px;padding:26px;box-shadow:0 20px 90px #14283c33;box-sizing:border-box;color:#25364a}
 .ssc-pwa-modal-icon{background:#fff0f5;color:#c3466c;display:grid;place-items:center;border-radius:12px;width:48px;height:48px;margin-bottom:13px}
 .ssc-pwa-modal h2{font-size:19px;margin:0 25px 10px 0;line-height:1.3}.ssc-pwa-modal p,.ssc-pwa-modal li{font-size:13px;line-height:1.65;color:#63758a}.ssc-pwa-modal ol{padding-left:23px}.ssc-pwa-modal li{margin-bottom:10px}.ssc-pwa-modal li svg{vertical-align:middle}.ssc-pwa-hint{font-size:11px!important}
 .ssc-pwa-close{position:absolute;right:16px;top:16px;background:transparent;border:0;color:#8796a8;cursor:pointer;padding:6px}.ssc-pwa-done{border:0;background:#d74b72;color:white;border-radius:9px;padding:11px 20px;font-weight:650;cursor:pointer;min-height:42px}
@@ -164,3 +166,5 @@
 }
 /* Printed reports retain tabular structure and hide installation UI. */
 @media print{.ssc-pwa-install,.ssc-pwa-modal-backdrop{display:none!important}}
+
+.ssc-pwa-apple-notice{background:#f6f8fb;border:1px solid #e5eaf0;padding:10px 12px;border-radius:9px;color:#33465c!important}

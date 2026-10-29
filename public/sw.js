@@ -1,6 +1,6 @@
 /* SSC PWA: cache only the application shell and same-origin static assets.
  * Local inspection records remain in browser storage, never in the SW cache. */
-const VERSION = 'ssc-pwa-v5-20261030';
+const VERSION = 'ssc-pwa-v6-apple-20261030';
 const SHELL = `${VERSION}-shell`;
 const STATIC = `${VERSION}-static`;
 const SCOPE = new URL(self.registration.scope);
@@ -8,7 +8,8 @@ const HOME = SCOPE.pathname;
 const relative = path => new URL(path, SCOPE).pathname;
 const FALLBACK = relative('offline.html');
 const essentials = [HOME, relative('offline.html'), relative('manifest.webmanifest'),
-  relative('icons/ssc-192.png'), relative('icons/ssc-512.png'), relative('icons/ssc-maskable-512.png')];
+  relative('icons/ssc-192.png'), relative('icons/ssc-512.png'), relative('icons/ssc-maskable-512.png'),
+  relative('icons/ssc-apple-180.png'), relative('icons/ssc-apple-167.png'), relative('icons/ssc-apple-152.png'), relative('icons/ssc-apple-120.png')];
 const isStatic = url => /\.(?:js|css|png|jpe?g|webp|svg|ico|woff2?|ttf)(?:$)/i.test(url.pathname);
 const isLocal = url => url.origin === SCOPE.origin && url.pathname.startsWith(SCOPE.pathname);
 

@@ -13,7 +13,7 @@ export function initPWA() {
     }
   }
   if (!document.querySelector('link[rel="apple-touch-icon"]')) {
-    const icon = document.createElement('link'); icon.rel = 'apple-touch-icon'; icon.href = `${import.meta.env.BASE_URL}icons/ssc-192.png`; document.head.appendChild(icon);
+    const icon = document.createElement('link'); icon.rel = 'apple-touch-icon'; icon.href = `${import.meta.env.BASE_URL}icons/ssc-apple-180.png`; document.head.appendChild(icon);
   }
   const theme = document.querySelector('meta[name="theme-color"]') || document.createElement('meta');
   theme.name = 'theme-color'; theme.content = '#153e56';
