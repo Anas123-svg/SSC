@@ -1,6 +1,6 @@
 /* SSC PWA: cache only the application shell and same-origin static assets.
  * Local inspection records remain in browser storage, never in the SW cache. */
-const VERSION = 'ssc-pwa-v13-harmonix-summary-cards-20261101';
+const VERSION = 'ssc-pwa-v14-harmonix-calendar-20261101';
 const SHELL = `${VERSION}-shell`;
 const STATIC = `${VERSION}-static`;
 const SCOPE = new URL(self.registration.scope);

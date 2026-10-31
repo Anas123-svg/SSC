@@ -9,8 +9,9 @@ const settings = readFileSync(new URL('../src/pages/SettingsPage.jsx', import.me
 
 const styles = [...source.matchAll(/import '\.\/styles\/([^']+\.css)'/g)].map(match => match[1]);
 
-test('Harmonix completion layer follows earlier styles, followed by V10 and V11 fixes', () => {
-  assert.equal(styles.at(-1), 'harmonix-summary-cards-v11.css');
+test('Harmonix completion layer follows earlier styles, followed by V10, V11 and V12 fixes', () => {
+  assert.equal(styles.at(-1), 'harmonix-calendar-v12.css');
+  assert.ok(styles.indexOf('harmonix-calendar-v12.css') > styles.indexOf('harmonix-summary-cards-v11.css'));
   assert.ok(styles.indexOf('harmonix-summary-cards-v11.css') > styles.indexOf('theme-controls-v10.css'));
   assert.ok(styles.indexOf('theme-controls-v10.css') > styles.indexOf('harmonix-complete-audit.css'));
   assert.ok(styles.indexOf('harmonix-complete-audit.css') > styles.indexOf('harmonix-inspections-templates.css'));

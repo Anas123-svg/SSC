@@ -1,0 +1,192 @@
+/* V12 | Harmonix calendars: lime/charcoal accent, preserved semantic statuses.
+   These overrides intentionally load after the base calendar and dark-mode styles.
+   Every selector is scoped to the Harmonix workspace; SSC retains its own pink. */
+html[data-workspace="harmonix"] {
+  --hx-calendar-accent:#B6D552;
+  --hx-calendar-accent-hover:#A5C542;
+  --hx-calendar-accent-ink:#26311E;
+  --hx-calendar-wash:#F3F8E6;
+  --hx-calendar-border:#DCE8C9;
+  --hx-calendar-text:#29382E;
+  --hx-calendar-muted:#6C7B70;
+}
+
+/* Dashboard / analytics custom date-range calendar. */
+html[data-workspace="harmonix"] .ssc-calendar-trigger { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .ssc-calendar-trigger > svg:first-child,
+html[data-workspace="harmonix"] .ssc-calendar-kicker { color:#B6D552; }
+html[data-workspace="harmonix"] .ssc-calendar-trigger:hover,
+html[data-workspace="harmonix"] .ssc-calendar-trigger.is-open { border-color:var(--hx-calendar-accent);box-shadow:0 0 0 3px #B6D55229; }
+html[data-workspace="harmonix"] .ssc-calendar-trigger:focus-visible,
+html[data-workspace="harmonix"] .ssc-calendar-popover button:focus-visible { outline:2px solid var(--hx-calendar-accent);outline-offset:2px; }
+html[data-workspace="harmonix"] .ssc-calendar-popover { background:#202B24;border-color:#4C5E47;color:#EFF6E9;scrollbar-color:#586A4D #202B24; }
+html[data-workspace="harmonix"] .ssc-calendar-popover-top strong,
+html[data-workspace="harmonix"] .ssc-calendar-month-head span { color:#F4F9EE; }
+html[data-workspace="harmonix"] .ssc-calendar-draft { background:#2B3A2E;border-color:#4D6348; }
+html[data-workspace="harmonix"] .ssc-calendar-draft .active small { color:#D3E995; }
+html[data-workspace="harmonix"] .ssc-calendar-dismiss:hover,
+html[data-workspace="harmonix"] .ssc-calendar-month-head button:hover:not(:disabled) { color:#DCEFA5;background:#3A4B36; }
+html[data-workspace="harmonix"] .ssc-calendar-days button:hover:not(:disabled):not(.is-endpoint) { background:#3A4C34;color:#F8FCEB; }
+html[data-workspace="harmonix"] .ssc-calendar-days button.is-in-range { background:#4B6332;border-color:#4B6332;color:#F4F9E7; }
+html[data-workspace="harmonix"] .ssc-calendar-days button.is-endpoint { background:var(--hx-calendar-accent);border-color:var(--hx-calendar-accent);color:var(--hx-calendar-accent-ink); }
+html[data-workspace="harmonix"] .ssc-calendar-days button.is-today:not(.is-endpoint) { border-color:#B6D552;color:#DDF1AA; }
+html[data-workspace="harmonix"] .ssc-calendar-apply:not(:disabled) { background:var(--hx-calendar-accent);border-color:var(--hx-calendar-accent);color:var(--hx-calendar-accent-ink); }
+html[data-workspace="harmonix"] .ssc-calendar-apply:hover:not(:disabled) { background:var(--hx-calendar-accent-hover);border-color:var(--hx-calendar-accent-hover);color:var(--hx-calendar-accent-ink); }
+html[data-workspace="harmonix"] .ssc-calendar-cancel:hover { background:#354635;color:#F6FAEF; }
+
+/* Inspection Schedule: headers, controls, summaries and planner. */
+html[data-workspace="harmonix"] .sx-page { --is-brand:#B6D552;--is-brand-weak:#F3F8E6;--is-ink:var(--hx-calendar-text);--is-border:var(--hx-calendar-border);--is-muted:var(--hx-calendar-muted); }
+html[data-workspace="harmonix"] .sx-page :is(button,input,select):focus-visible { outline-color:#8DA837;outline-offset:2px; }
+html[data-workspace="harmonix"] .sx-eyebrow { color:#5B722B; }
+html[data-workspace="harmonix"] .sx-primary { background:var(--hx-calendar-accent);border-color:var(--hx-calendar-accent);color:var(--hx-calendar-accent-ink);box-shadow:none; }
+html[data-workspace="harmonix"] .sx-primary:hover:not(:disabled) { background:var(--hx-calendar-accent-hover);border-color:var(--hx-calendar-accent-hover);color:var(--hx-calendar-accent-ink);box-shadow:0 4px 14px #708d2b21; }
+html[data-workspace="harmonix"] .sx-summary-card { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-summary-card > span svg { color:#668231; }
+html[data-workspace="harmonix"] .sx-summary-card > strong { color:var(--hx-calendar-text); }
+html[data-workspace="harmonix"] .sx-summary-card > small { color:var(--hx-calendar-muted); }
+html[data-workspace="harmonix"] .sx-surface { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-view-switch { background:#F1F5EA;border-color:#DCE8C9; }
+html[data-workspace="harmonix"] .sx-view-switch button { color:#657366; }
+html[data-workspace="harmonix"] .sx-view-switch button.active { color:#364F1F;background:#E6F0C8;box-shadow:inset 0 0 0 1px #C6DDA0; }
+html[data-workspace="harmonix"] .sx-view-switch button:hover:not(.active) { color:#425A25;background:#E9F1DA; }
+html[data-workspace="harmonix"] .sx-secondary:hover,
+html[data-workspace="harmonix"] .sx-export:hover { border-color:#B6D552;background:#F4F9E8;color:#405A22; }
+html[data-workspace="harmonix"] .sx-filter-row { background:#FBFDF6;border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-search:focus-within,
+html[data-workspace="harmonix"] .sx-select-wrap select:focus-visible { border-color:#A4C34E;box-shadow:0 0 0 3px #B6D55228; }
+html[data-workspace="harmonix"] .sx-clear { color:#587229; }
+html[data-workspace="harmonix"] .sx-clear:hover { color:#344C18; }
+html[data-workspace="harmonix"] .sx-calendar-toolbar,
+html[data-workspace="harmonix"] .sx-calendar-layout { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-calendar-heading h3 { color:var(--hx-calendar-text); }
+html[data-workspace="harmonix"] .sx-calendar-heading > span { color:#566B3E;background:#EFF5DE; }
+html[data-workspace="harmonix"] .sx-calendar-navigation button { border-color:var(--hx-calendar-border);color:#55703C; }
+html[data-workspace="harmonix"] .sx-calendar-navigation button:hover { border-color:#B6D552;color:#364D1B;background:#F0F7DA; }
+html[data-workspace="harmonix"] .sx-calendar-navigation button.sx-today { color:#4C6626;font-weight:760; }
+html[data-workspace="harmonix"] .sx-weekday { background:#F7FAF0;color:#677C5B;border-color:#E2EAD9; }
+html[data-workspace="harmonix"] .sx-day { border-color:#E2EAD9; }
+html[data-workspace="harmonix"] .sx-day:not(.is-selected):hover { background:#F7FAED; }
+html[data-workspace="harmonix"] .sx-day.is-outside { background:#F9FAF5; }
+html[data-workspace="harmonix"] .sx-day.is-outside .sx-day-number { color:#A7B3A4; }
+html[data-workspace="harmonix"] .sx-day.is-selected { background:#F3F8E5;box-shadow:inset 0 0 0 2px #B6D552; }
+html[data-workspace="harmonix"] .sx-day.is-selected:hover { background:#EDF6D8; }
+html[data-workspace="harmonix"] .sx-day-number { color:#465846; }
+html[data-workspace="harmonix"] .sx-day.is-today .sx-day-number { background:#B6D552;color:#24311A; }
+html[data-workspace="harmonix"] .sx-day.is-selected:not(.is-today) .sx-day-number { background:#DDEAAB;color:#34491D; }
+/* A scheduled inspection is lime; completed remains success green, cancelled stays neutral grey. */
+html[data-workspace="harmonix"] .sx-event:not(.sx-event--completed):not(.sx-event--cancelled) { background:#E9F4C9;color:#425C1F; }
+html[data-workspace="harmonix"] .sx-event:not(.sx-event--completed):not(.sx-event--cancelled):hover { background:#DBEDAC;color:#304519;filter:none; }
+html[data-workspace="harmonix"] .sx-event--completed { background:#E5F5EE;color:#246A4E; }
+html[data-workspace="harmonix"] .sx-event--cancelled { background:#EFF1F0;color:#65756C; }
+html[data-workspace="harmonix"] .sx-more { color:#526D27; }
+html[data-workspace="harmonix"] .sx-more:hover { color:#293F16; }
+html[data-workspace="harmonix"] .sx-mobile-count { background:#B6D552;color:#25311F; }
+
+/* Selected-day panel, status chips, list view, and event legend. */
+html[data-workspace="harmonix"] .sx-day-panel { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-day-panel-head { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-day-panel-head span { color:#5D752F; }
+html[data-workspace="harmonix"] .sx-day-panel-head > button { border-color:#C8DDA0;background:#EFF7D9;color:#405A1F; }
+html[data-workspace="harmonix"] .sx-day-panel-head > button:hover { background:#E3F0C1;border-color:#B6D552; }
+html[data-workspace="harmonix"] .sx-day-appointment:hover { border-color:#AECF70;box-shadow:0 4px 16px #62792C16; }
+html[data-workspace="harmonix"] .sx-status-dot:not(.sx-status-dot--completed):not(.sx-status-dot--cancelled) { background:#9CBF39; }
+html[data-workspace="harmonix"] .sx-status:not(.sx-status--completed):not(.sx-status--cancelled) { background:#EAF4CE;color:#44611B; }
+html[data-workspace="harmonix"] .sx-status--completed { background:#E7F6ED;color:#1B7251; }
+html[data-workspace="harmonix"] .sx-status--cancelled { background:#EFF2F0;color:#5D7063; }
+html[data-workspace="harmonix"] .sx-no-day button { border-color:#C9DBA5;background:#F1F8E0;color:#45621F; }
+html[data-workspace="harmonix"] .sx-no-day button:hover { background:#E2F0C0;border-color:#B6D552; }
+html[data-workspace="harmonix"] .sx-up-next { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-up-next button:hover strong { color:#4A6421; }
+html[data-workspace="harmonix"] .sx-legend-dot:not(.done):not(.cancelled) { background:#9BBD3D; }
+html[data-workspace="harmonix"] .sx-board-footer { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-list-heading { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-list-heading > span { color:#566A42;background:#EEF5DF; }
+html[data-workspace="harmonix"] .sx-agenda-group,
+html[data-workspace="harmonix"] .sx-agenda-date { border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"] .sx-agenda-date { background:#F5F9EB;color:#557026; }
+html[data-workspace="harmonix"] .sx-agenda-date h4 { color:#354932; }
+html[data-workspace="harmonix"] .sx-agenda-row:hover { background:#F8FAF1; }
+html[data-workspace="harmonix"] .sx-agenda-row:hover .sx-agenda-arrow { color:#657F32; }
+
+/* Legacy schedule calendar (Records page) is unused by primary navigation but
+   remains branded if accessed from an older route or embedded view. */
+html[data-workspace="harmonix"] .schedule-calendar section { border-color:#DCE8C9; }
+html[data-workspace="harmonix"] .schedule-calendar button { background:#F4F9E8;border-color:#DCE8C9;color:#344932; }
+html[data-workspace="harmonix"] .schedule-calendar button:hover { background:#EAF4CE;border-color:#B6D552; }
+
+/* Harmonix dark mode: forest/charcoal surfaces, lime selection and legible text. */
+html[data-workspace="harmonix"][data-theme="dark"] {
+  --hx-calendar-wash:#31412B;
+  --hx-calendar-border:#405343;
+  --hx-calendar-text:#EEF6E7;
+  --hx-calendar-muted:#B1C4B0;
+}
+html[data-workspace="harmonix"][data-theme="dark"] .sx-summary-card,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-surface,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-calendar,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-panel { background:#1D2A23;color:#ECF4E8;border-color:var(--hx-calendar-border); }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-summary-card > :is(strong,span) { color:#F1F8E7; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-summary-card > span svg { color:#C5E374; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-summary-card > small { color:#B9C9B8; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-calendar-heading h3,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-panel-head h3,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-board-top h2,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-list-heading h3,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-agenda-date h4 { color:#EAF3E7; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-view-switch,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-calendar-navigation button,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-secondary,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-filter-row,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-calendar-toolbar { background:#24352B;border-color:#3F5541;color:#D3E1CD; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-view-switch button.active { background:#3E512F;color:#E1F3B7;box-shadow:inset 0 0 0 1px #728847; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-view-switch button:hover:not(.active) { background:#324431;color:#EBF5E0; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-calendar-navigation button:hover,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-secondary:hover { background:#344831;border-color:#9AB945;color:#DDF1AA; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-search,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-select-wrap select { background:#1E3025;border-color:#405641;color:#EAF2E4; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-weekday { background:#25362A;color:#BACBB3;border-color:#405343; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day { background:#1D2A23;border-color:#3F5141; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day.is-outside { background:#19251F; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day:not(.is-selected):hover { background:#2A3B2D; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day.is-selected,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day.is-selected:hover { background:#31462C;box-shadow:inset 0 0 0 2px #B6D552; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-number { color:#DEEADC; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day.is-selected:not(.is-today) .sx-day-number { background:#455B33;color:#E6F5B8; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day.is-today .sx-day-number { background:#B6D552;color:#1D2B1A; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-event:not(.sx-event--completed):not(.sx-event--cancelled) { background:#3A522A;color:#E1F2B8; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-event--completed { background:#214336;color:#AFDEC7; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-event--cancelled { background:#344039;color:#CED7D0; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-more,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-panel-head span { color:#C5E37E; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-panel-head,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-agenda-date,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-agenda-group,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-board-footer,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-up-next { border-color:#405343; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-panel-head > button { background:#3C4E30;border-color:#65833E;color:#DFF2A8; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-appointment,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-agenda-row,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-agenda-date,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-up-next { background:#223128;border-color:#405343;color:#EAF3E6; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-agenda-row:hover,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-appointment:hover { background:#2C402E;border-color:#6A8743; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-appointment > strong,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-agenda-main strong,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-up-next button strong { color:#F0F7E9; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-day-appointment > small,
+html[data-workspace="harmonix"][data-theme="dark"] .sx-agenda-main small { color:#B5C7B2; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-status:not(.sx-status--completed):not(.sx-status--cancelled) { background:#415D2C;color:#E8F7C9; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-no-day button { background:#3A4F2E;color:#E6F4C3;border-color:#6D8A46; }
+html[data-workspace="harmonix"][data-theme="dark"] .sx-list-heading > span { background:#33472E;color:#E0F0C2; }
+html[data-workspace="harmonix"][data-theme="dark"] .schedule-calendar section { border-color:#405343; }
+html[data-workspace="harmonix"][data-theme="dark"] .schedule-calendar button { background:#293D2A;border-color:#445C41;color:#EAF4E8; }
+
+/* Match the range picker to the dark Harmonix calendar; avoid any SSC pink. */
+html[data-workspace="harmonix"][data-theme="dark"] .ssc-calendar-trigger { background:#223228;border-color:#465E45;color:#E9F3E2; }
+html[data-workspace="harmonix"][data-theme="dark"] .ssc-calendar-trigger:hover,
+html[data-workspace="harmonix"][data-theme="dark"] .ssc-calendar-trigger.is-open { border-color:#B6D552;box-shadow:0 0 0 3px #B6D55227; }
+html[data-workspace="harmonix"][data-theme="dark"] .ssc-calendar-popover { background:#1E2B23;border-color:#42573F;color:#EAF3E4; }
+html[data-workspace="harmonix"][data-theme="dark"] .ssc-calendar-draft { background:#293A2B;border-color:#476247; }
+html[data-workspace="harmonix"][data-theme="dark"] .ssc-calendar-days button.is-in-range { background:#476333;border-color:#476333;color:#F4F9EC; }
+html[data-workspace="harmonix"][data-theme="dark"] .ssc-calendar-days button.is-endpoint { background:#B6D552;border-color:#B6D552;color:#1F2A1F; }
+html[data-workspace="harmonix"][data-theme="dark"] .ssc-calendar-days button.is-today:not(.is-endpoint) { border-color:#A6C44D;color:#E0F2A9; }
