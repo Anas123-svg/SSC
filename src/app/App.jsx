@@ -19,6 +19,8 @@ export default function App() {
   const [db, setDb] = useState(initial.db);
   const [hash, setHash] = useState(window.location.hash);
   const [offline, setOffline] = useState(() => !navigator.onLine);
+  const [appearance, setAppearance] = useState(() => { try { const stored = localStorage.getItem('ssc-appearance-mode'); return ['light','dark','system'].includes(stored) ? stored : 'light'; } catch { return 'light'; } });
+  const [prefersDark, setPrefersDark] = useState(() => window.matchMedia?.('(prefers-color-scheme: dark)').matches || false);
   const [permissions] = useState({ role: 'Admin' }); // Demo session; never an authentication boundary.
   const [modal, setModal] = useState(null), [navOpen, setNavOpen] = useState(false), [notify, setNotify] = useState(false);
   const [query, setQuery] = useState(''), [toast, setToast] = useState(''), [storageError, setStorageError] = useState('');
@@ -31,6 +33,21 @@ export default function App() {
   const { workspaceId: activeWorkspaceId, page, detailId, subview } = route;
   const activeWorkspace = db?.workspaces.find(w => w.id === activeWorkspaceId) || ADMIN_WORKSPACE;
   const isAdmin = isAdministrator(permissions);
+  const resolvedAppearance = appearance === 'system' ? (prefersDark ? 'dark' : 'light') : appearance;
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-color-scheme: dark)');
+    const changed = event => setPrefersDark(event.matches);
+    preference.addEventListener?.('change', changed);
+    return () => preference.removeEventListener?.('change', changed);
+  }, []);
+  useEffect(() => {
+    document.documentElement.dataset.workspace = activeWorkspaceId;
+    document.documentElement.dataset.theme = resolvedAppearance;
+    document.documentElement.style.colorScheme = resolvedAppearance;
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.setAttribute('content', resolvedAppearance === 'dark' ? '#0e1620' : activeWorkspaceId === 'harmonix' ? '#23302A' : '#202833');
+    try { localStorage.setItem('ssc-appearance-mode', appearance); } catch { /* Settings remain available for this visit. */ }
+  }, [activeWorkspaceId, resolvedAppearance, appearance]);
   useEffect(() => {
     const update = () => setOffline(!navigator.onLine);
     window.addEventListener('online', update);
@@ -93,7 +110,7 @@ export default function App() {
   const findProject = id => scopedSites.find(p => p.id === id)?.name || 'Unlinked project';
   const context = {
     db, commit, saveRecord, scoped, page, detailId, subview, activeWorkspaceId, activeWorkspace, workspaces: db.workspaces.filter(isVisibleWorkspace),
-    permissions, isAdmin, navigation: getNavigationForWorkspace(activeWorkspace, permissions), can: id => canAccessPage(activeWorkspace, id, permissions),
+    permissions, isAdmin, appearance, setAppearance, resolvedAppearance, navigation: getNavigationForWorkspace(activeWorkspace, permissions), can: id => canAccessPage(activeWorkspace, id, permissions),
     go, setActiveWorkspaceId: selectWorkspace, createWorkspace, scopedSites, audits, actions, team: scoped('users'), openActions,
     high: openActions.filter(a => ['High','Critical'].includes(a.priority)).length, findProject,
     modal, setModal, navOpen, setNavOpen, notify, setNotify, query, setQuery, searchRef, toast, setToast,

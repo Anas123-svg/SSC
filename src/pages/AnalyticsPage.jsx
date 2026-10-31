@@ -12,7 +12,9 @@ import { analyticsForScope, analyticsWindow } from '../data/analytics.js';
 import { today } from '../data/repository.js';
 import { isOpen } from '../data/repository.js';
 
-const PALETTE = { pink: '#d64e76', slate: '#b9c9da', blue: '#5279a6', teal: '#45a28b', orange: '#efa45a', red: '#d76b72', gray: '#e6ebf1' };
+const SSC_PALETTE = { pink: '#d64e76', slate: '#b9c9da', blue: '#5279a6', teal: '#45a28b', orange: '#efa45a', red: '#d76b72', gray: '#e6ebf1' };
+const HARMONIX_PALETTE = { pink: '#B6D552', slate: '#8c9b92', blue: '#526b62', teal: '#647b37', orange: '#efa45a', red: '#d76b72', gray: '#e7eddd' };
+const PALETTE = SSC_PALETTE;
 const CHART_AXIS = { fontSize: 11, fill: '#8793a5' };
 const CHART_TIP = { contentStyle: { border: '1px solid #e6eaf0', borderRadius: 11, fontSize: 12, boxShadow: '0 10px 30px #25334816' } };
 const fmt = n => new Intl.NumberFormat('en-GB').format(n || 0);
@@ -54,10 +56,10 @@ function InspectionStatusPanel({ statuses, completed, total }) {
   </Panel>;
 }
 
-function InspectionTypesPanel({ typeRows, total }) {
+function InspectionTypesPanel({ typeRows, total, palette = SSC_PALETTE }) {
   return <Panel title="Inspection types" note="Most frequently recorded inspection categories">
     {typeRows.length ? <div className="insight-progress-list">
-      {typeRows.map((row, index) => <ProgressRow key={row.name} title={row.name} amount={row.total} total={total} tone={index === 0 ? PALETTE.pink : PALETTE.blue}/>)}
+      {typeRows.map((row, index) => <ProgressRow key={row.name} title={row.name} amount={row.total} total={total} tone={index === 0 ? palette.pink : palette.blue}/>)}
     </div> : <Empty text="Types appear when you save inspection records."/>}
   </Panel>;
 }
@@ -66,6 +68,7 @@ function InspectionTypesPanel({ typeRows, total }) {
 export default function AnalyticsPage({ projectId = '', embedded = false, inspectionPanelsOnly = false }) {
   const { activeWorkspaceId, activeWorkspace, workspaces, audits, actions, scopedSites, go } = usePortal();
   const admin = activeWorkspaceId === 'admin';
+  const palette = activeWorkspaceId === 'harmonix' ? HARMONIX_PALETTE : SSC_PALETTE;
   const [workspace, setWorkspace] = useState('');
   const [project, setProject] = useState('');
   const [period, setPeriod] = useState('6');
@@ -98,7 +101,7 @@ export default function AnalyticsPage({ projectId = '', embedded = false, inspec
     return [...counts].map(([name, total]) => ({ name, total })).sort((a, b) => b.total - a.total).slice(0, 6);
   }, [inspections]);
   const completed = results?.statuses.find(s => s.name === 'Completed')?.value || 0;
-  const statuses = (results?.statuses || []).map((entry, index) => ({ ...entry, color: [PALETTE.teal, PALETTE.blue, PALETTE.orange, PALETTE.slate][index % 4] }));
+  const statuses = (results?.statuses || []).map((entry, index) => ({ ...entry, color: [palette.pink, palette.blue, palette.orange, palette.slate][index % 4] }));
   const openFindings = findings.filter(isOpen);
   const priorityCount = openFindings.filter(action => ['High', 'Critical'].includes(action.priority)).length;
   const scoreTrend = results?.trend.filter(item => item.compliance != null) || [];
@@ -113,7 +116,7 @@ export default function AnalyticsPage({ projectId = '', embedded = false, inspec
     return <div className="insight-page is-embedded pd-inspection-insights" aria-label="Project inspection insights">
       <div className="insight-chart-grid">
         <InspectionStatusPanel statuses={statuses} completed={completed} total={m?.total || 0}/>
-        <InspectionTypesPanel typeRows={typeRows} total={m?.total || 0}/>
+        <InspectionTypesPanel typeRows={typeRows} total={m?.total || 0} palette={palette}/>
       </div>
     </div>;
   }
@@ -147,13 +150,13 @@ export default function AnalyticsPage({ projectId = '', embedded = false, inspec
 
       <div className="insight-chart-grid">
         <Panel title="Inspection volume" note="Recorded and completed inspections by month" badge={`${fmt(m.total)} total`}>
-          {results.trend.length ? <div className="insight-chart" role="img" aria-label="Monthly inspection volume chart"><ResponsiveContainer width="100%" height="100%"><BarChart data={results.trend} margin={{ top: 12, right: 10, left: -23, bottom: 0 }} barGap={3}><CartesianGrid stroke="#eef1f5" vertical={false} strokeDasharray="3 5"/><XAxis dataKey="month" tick={CHART_AXIS} axisLine={false} tickLine={false} tickFormatter={value => value.slice(5) + '/' + value.slice(2, 4)}/><YAxis allowDecimals={false} tick={CHART_AXIS} axisLine={false} tickLine={false}/><Tooltip {...CHART_TIP}/><Legend iconType="circle" wrapperStyle={{ fontSize: 11 }}/><Bar name="Recorded" dataKey="total" fill={PALETTE.slate} maxBarSize={34} radius={[4,4,0,0]}/><Bar name="Completed" dataKey="completed" fill={PALETTE.pink} maxBarSize={34} radius={[4,4,0,0]}/></BarChart></ResponsiveContainer></div> : <Empty text="Inspections with valid dates will appear as monthly activity."/>}
+          {results.trend.length ? <div className="insight-chart" role="img" aria-label="Monthly inspection volume chart"><ResponsiveContainer width="100%" height="100%"><BarChart data={results.trend} margin={{ top: 12, right: 10, left: -23, bottom: 0 }} barGap={3}><CartesianGrid stroke="#eef1f5" vertical={false} strokeDasharray="3 5"/><XAxis dataKey="month" tick={CHART_AXIS} axisLine={false} tickLine={false} tickFormatter={value => value.slice(5) + '/' + value.slice(2, 4)}/><YAxis allowDecimals={false} tick={CHART_AXIS} axisLine={false} tickLine={false}/><Tooltip {...CHART_TIP}/><Legend iconType="circle" wrapperStyle={{ fontSize: 11 }}/><Bar name="Recorded" dataKey="total" fill={palette.slate} maxBarSize={34} radius={[4,4,0,0]}/><Bar name="Completed" dataKey="completed" fill={palette.pink} maxBarSize={34} radius={[4,4,0,0]}/></BarChart></ResponsiveContainer></div> : <Empty text="Inspections with valid dates will appear as monthly activity."/>}
         </Panel>
         <Panel title="Compliance movement" note="Mean scores of completed inspections by month" badge={m.compliance == null ? 'No scores' : `${m.compliance}% average`}>
-          {scoreTrend.length ? <div className="insight-chart" role="img" aria-label="Monthly compliance score chart"><ResponsiveContainer width="100%" height="100%"><LineChart data={results.trend} margin={{ top: 12, right: 15, left: -20, bottom: 0 }}><CartesianGrid stroke="#eef1f5" vertical={false} strokeDasharray="3 5"/><XAxis dataKey="month" tick={CHART_AXIS} axisLine={false} tickLine={false}/><YAxis domain={[0,100]} unit="%" tick={CHART_AXIS} axisLine={false} tickLine={false}/><Tooltip {...CHART_TIP} formatter={value => value == null ? 'No scored inspection' : `${value}%`}/><Line dataKey="compliance" name="Compliance" stroke={PALETTE.pink} strokeWidth={3} type="monotone" connectNulls={false} dot={{ r: 4, fill: '#fff', strokeWidth: 2 }} activeDot={{ r: 6 }}/></LineChart></ResponsiveContainer></div> : <Empty text="Complete a scored inspection to build a compliance trend."/>}
+          {scoreTrend.length ? <div className="insight-chart" role="img" aria-label="Monthly compliance score chart"><ResponsiveContainer width="100%" height="100%"><LineChart data={results.trend} margin={{ top: 12, right: 15, left: -20, bottom: 0 }}><CartesianGrid stroke="#eef1f5" vertical={false} strokeDasharray="3 5"/><XAxis dataKey="month" tick={CHART_AXIS} axisLine={false} tickLine={false}/><YAxis domain={[0,100]} unit="%" tick={CHART_AXIS} axisLine={false} tickLine={false}/><Tooltip {...CHART_TIP} formatter={value => value == null ? 'No scored inspection' : `${value}%`}/><Line dataKey="compliance" name="Compliance" stroke={palette.pink} strokeWidth={3} type="monotone" connectNulls={false} dot={{ r: 4, fill: '#fff', strokeWidth: 2 }} activeDot={{ r: 6 }}/></LineChart></ResponsiveContainer></div> : <Empty text="Complete a scored inspection to build a compliance trend."/>}
         </Panel>
         <InspectionStatusPanel statuses={statuses} completed={completed} total={m.total}/>
-        <InspectionTypesPanel typeRows={typeRows} total={m.total}/>
+        <InspectionTypesPanel typeRows={typeRows} total={m.total} palette={palette}/>
       </div>
 
       {!embedded && <Panel wide title={project ? 'Selected project performance' : 'Project performance comparison'} note="Inspections and findings linked to each registered project" badge={`${results.comparison.length} projects`}>

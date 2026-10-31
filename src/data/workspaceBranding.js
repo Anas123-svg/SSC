@@ -1,8 +1,7 @@
 /**
- * Brand assets sourced from SSC's supplied reference materials.
- * The Harmonix wordmark is extracted verbatim from
- * reference/HXC_Site_Compliance_Audit_Final Rev 0122.docx (word/media/image1.png).
- * Existing uploaded workspace logos take precedence over these built-in assets.
+ * Built-in workspace logo assets. Harmonix uses the user's supplied
+ * lime wordmark with its background removed (transparent PNG, V6).
+ * Workspace-specific uploaded logos take precedence over these defaults.
  */
 export const WORKSPACE_BRAND_ASSETS = Object.freeze({
   harmonix: '/harmonix-logo.png',

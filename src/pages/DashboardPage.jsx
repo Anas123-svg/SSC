@@ -26,8 +26,10 @@ function PanelTitle({ title, description, action, onAction }) {
   return <div className="ssc-dash-panel-head"><div><h2>{title}</h2>{description && <p>{description}</p>}</div>{action && <button type="button" className="ssc-dash-text-action" onClick={onAction}>{action}<ArrowRight size={15}/></button>}</div>;
 }
 export default function DashboardPage() {
-  const { activeWorkspace, activeWorkspaceId, workspaces, scopedSites, audits, actions, go, can, matches } = usePortal();
+  const { activeWorkspace, activeWorkspaceId, workspaces, scopedSites, audits, actions, go, can, matches, resolvedAppearance } = usePortal();
   const admin = activeWorkspaceId === 'admin';
+  const harmonix = activeWorkspaceId === 'harmonix';
+  const chartColor = harmonix ? '#B6D552' : '#d74b72';
   const summary = dashboardSummary(audits, actions, scopedSites);
   const asOf = today();
   const [period, setPeriod] = useState('4');
@@ -95,12 +97,12 @@ export default function DashboardPage() {
       </div>
       {rangeError ? <p className="ssc-dash-range-error" role="alert">{rangeError}</p>
         : totalInPeriod ? <div className="ssc-dash-chart" aria-label="Inspection counts by period, completed and other statuses"><ResponsiveContainer width="100%" height="100%"><BarChart data={activity} margin={{ top: 12, right: 18, left: -20, bottom: 0 }} barCategoryGap="28%" maxBarSize={48}>
-          <CartesianGrid stroke="#eef0f4" vertical={false} strokeDasharray="4 5" />
-          <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fill: '#778296', fontSize: 12 }} dy={8} minTickGap={18}/>
-          <YAxis allowDecimals={false} tickLine={false} axisLine={false} tick={{ fill: '#778296', fontSize: 11 }} />
-          <Tooltip cursor={{ fill: '#faf3f6' }} labelFormatter={(_label, payload) => payload?.[0]?.payload?.rangeLabel || _label} contentStyle={{ borderRadius: 10, border: '1px solid #e8ecf1', boxShadow: '0 8px 24px #192d4412' }} />
-          <Bar dataKey="completed" stackId="inspections" name="Completed" fill="#d74b72" />
-          <Bar dataKey="other" stackId="inspections" name="Other statuses" fill="#ccd5e2" radius={[5, 5, 0, 0]} />
+          <CartesianGrid stroke={resolvedAppearance === "dark" ? "#34495a" : "#eef0f4"} vertical={false} strokeDasharray="4 5" />
+          <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fill: resolvedAppearance === 'dark' ? '#b7c7d6' : '#778296', fontSize: 12 }} dy={8} minTickGap={18}/>
+          <YAxis allowDecimals={false} tickLine={false} axisLine={false} tick={{ fill: resolvedAppearance === 'dark' ? '#b7c7d6' : '#778296', fontSize: 11 }} />
+          <Tooltip cursor={{ fill: resolvedAppearance === 'dark' ? '#28404b' : harmonix ? '#f2f8dd' : '#faf3f6' }} labelFormatter={(_label, payload) => payload?.[0]?.payload?.rangeLabel || _label} contentStyle={{ borderRadius: 10, border: resolvedAppearance === 'dark' ? '1px solid #536579' : '1px solid #e8ecf1', background: resolvedAppearance === 'dark' ? '#263747' : '#fff', color: resolvedAppearance === 'dark' ? '#e5eef9' : '#263547', boxShadow: '0 8px 24px #192d4412' }} />
+          <Bar dataKey="completed" stackId="inspections" name="Completed" fill={chartColor} />
+          <Bar dataKey="other" stackId="inspections" name="Other statuses" fill={harmonix ? '#798a79' : '#ccd5e2'} radius={[5, 5, 0, 0]} />
         </BarChart></ResponsiveContainer></div>
         : <div className="ssc-dash-chart-empty"><ClipboardCheck size={26}/><strong>No inspection activity in this range</strong><span>Choose a different date range or record an inspection to see activity here.</span></div>}
       <div className="ssc-dash-chart-foot"><span aria-live="polite">{chartSummary}</span><button type="button" onClick={() => go('audits')}>Inspection register <ArrowRight size={14}/></button></div>

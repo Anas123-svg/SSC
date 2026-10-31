@@ -1,0 +1,246 @@
+/* V7 / Harmonix completeness pass — MUST load after all other app CSS.
+   All non-semantic decoration is scoped by data-workspace. The SSC Admin
+   workspace, safety urgency badges and HXC C/MI/MA/N/A status colors stay intact. */
+html[data-workspace="harmonix"] {
+  --hx-primary:#B6D552;
+  --hx-primary-hover:#A7C447;
+  --hx-primary-soft:#F0F7D9;
+  --hx-action:#536B24;
+  --hx-dark:#23302A;
+  --hx-body:#29372F;
+  --hx-neutral:#687970;
+  --hx-border:#DEE8D8;
+  --hx-input:#FFFFFF;
+  --hx-card:#FFFFFF;
+  --hx-background:#FCFDF8;
+  --pf-accent:#B6D552;
+}
+/* Transparent user-provided Harmonix top/sidebar logo: no forced white plate. */
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-brand-mark.is-harmonix img {
+  width:170px;height:57px;max-width:100%;padding:0;background:transparent;border:0;box-shadow:none;border-radius:0;object-fit:contain;object-position:left center;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-brand-mark.is-harmonix {min-height:58px;}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar :is(.ssc-workspace-avatar.ssc-logo-avatar,.ssc-option-avatar.ssc-logo-avatar) {
+  background:#28372F;border-color:#536343;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar :is(.ssc-workspace-avatar.ssc-logo-avatar img,.ssc-option-avatar.ssc-logo-avatar img) {
+  background:transparent;
+}
+/* Common controls: no accidental pink inheritance in secondary controls, focus,
+   or workspace-scoped dialog headers. Distinct destructive/error controls are excluded. */
+html[data-workspace="harmonix"] :is(.workspace-page,.pd-page,.ssc-pform,.insight-page){accent-color:#829E33;}
+html[data-workspace="harmonix"] :is(.workspace-page,.pd-page,.ssc-pform,.insight-page) :is(input,select,textarea):focus:not(:disabled),
+html[data-workspace="harmonix"] :is(.workspace-page,.pd-page,.ssc-pform,.insight-page) :is(input,select,textarea):focus-visible:not(:disabled){border-color:#8CA939;box-shadow:0 0 0 3px #B6D55224;outline-color:#78982B;}
+html[data-workspace="harmonix"] .workspace-page :is(button,a):focus-visible{outline-color:#78982B;outline-offset:3px;}
+html[data-workspace="harmonix"] :is(.btn.primary,.pd-btn-primary,.ssc-pform-button.primary,.insight-main-action.is-primary,.sw-btn.sw-primary){background:var(--hx-primary);color:#1F2A2E;border-color:var(--hx-primary);box-shadow:none;}
+html[data-workspace="harmonix"] :is(.btn.primary,.pd-btn-primary,.ssc-pform-button.primary,.insight-main-action.is-primary,.sw-btn.sw-primary):hover:not(:disabled){background:var(--hx-primary-hover);color:#1F2A2E;border-color:var(--hx-primary-hover);}
+html[data-workspace="harmonix"] :is(.pd-btn:not(.pd-btn-primary),.ssc-pform-button:not(.primary),.btn.outline,.insight-main-action):hover:not(:disabled){border-color:#B3CA79;background:#F5F9E9;color:#35481E;}
+
+/* Project details: overview, inspections, insights, reports and documents tabs. */
+html[data-workspace="harmonix"] .pd-page {
+  --pd-border:var(--hx-border);--pd-ink:var(--hx-dark);--pd-sub:var(--hx-neutral);--pd-pink:var(--hx-action);
+}
+html[data-workspace="harmonix"] .pd-page :is(.pd-hero,.pd-panel,.pd-kpi,.pd-hxc-entry){background:var(--hx-card);border-color:var(--hx-border);}
+html[data-workspace="harmonix"] .pd-page :is(.pd-hero h1,.pd-panel-head h2,.pd-hxc-entry h2,.pd-kpi strong,.pd-quick-actions strong,.pd-record-main strong,.pd-definition strong,.pd-upcoming-row>div strong,.pd-project-description){color:var(--hx-dark);}
+html[data-workspace="harmonix"] .pd-page :is(.pd-crumb button:hover,.pd-crumb>span:last-child,.pd-eyebrow,.pd-text-btn,.pd-map-link,.pd-section-summary svg,.pd-address>svg,.pd-hxc-entry-kicker){color:var(--hx-action);}
+html[data-workspace="harmonix"] .pd-page .pd-eye-dot{background:var(--hx-primary);}
+html[data-workspace="harmonix"] .pd-page .pd-hero-meta svg{color:#718A45;}
+html[data-workspace="harmonix"] .pd-page :is(.pd-project-avatar,.pd-kpi-icon,.pd-panel-icon,.pd-record-icon,.pd-hxc-entry-icon,.pd-empty>span,.pd-date-tile,.pd-quick-actions button>span:first-child){background:#F0F7DA;color:#556D24;border-color:#D8E6B5;}
+html[data-workspace="harmonix"] .pd-page .pd-kpi.is-alert .pd-kpi-icon{background:#FFF3E7;color:#AD6837;}
+html[data-workspace="harmonix"] .pd-page .pd-meter{background:#E9F0DE;}
+html[data-workspace="harmonix"] .pd-page .pd-meter span{background:linear-gradient(90deg,#849E30,#B6D552);}
+html[data-workspace="harmonix"] .pd-page .pd-tabs.project-section-nav button{color:#728078;}
+html[data-workspace="harmonix"] .pd-page .pd-tabs.project-section-nav button:hover{color:#4A611D;}
+html[data-workspace="harmonix"] .pd-page .pd-tabs.project-section-nav button.active{background:transparent;color:#41561C;border-bottom-color:var(--hx-primary);}
+html[data-workspace="harmonix"] .pd-page .pd-text-btn:hover{color:#36491B;}
+html[data-workspace="harmonix"] .pd-page :is(.pd-record-row,.pd-quick-actions button){background:transparent;border-color:#E5ECDF;}
+html[data-workspace="harmonix"] .pd-page :is(.pd-record-row,.pd-quick-actions button):hover{background:#F3F8E9;}
+html[data-workspace="harmonix"] .pd-page :is(.pd-record-list,.pd-section-summary,.pd-definition,.pd-panel-head,.pd-upcoming-row,.pd-contact-list){border-color:var(--hx-border);}
+html[data-workspace="harmonix"] .pd-page :is(.pd-completion,.pd-note:not(.is-safety),.pd-map-placeholder){background:#F7FAF0;border-color:var(--hx-border);}
+html[data-workspace="harmonix"] .pd-page .pd-map-placeholder{background:repeating-linear-gradient(45deg,#F7FAF0,#F7FAF0 12px,#EFF5E5 12px,#EFF5E5 24px);}
+html[data-workspace="harmonix"] .pd-page .pd-section-summary span{color:#5E7165;}
+html[data-workspace="harmonix"] .pd-page .pd-document-filter select{background:var(--hx-input);border-color:var(--hx-border);color:var(--hx-dark);}
+html[data-workspace="harmonix"] .pd-page .pd-hxc-ready{background:#EDF6D5;color:#496119;border:1px solid #D6E6A3;}
+/* Safety findings remain severity-coded: critical/red, overdue/red, minor/amber. */
+
+/* Project creation/editing + location picker: remove remaining pink headings,
+   map actions, focus rings, and selected map pin. */
+html[data-workspace="harmonix"] .ssc-pform{
+  --pf-ink:var(--hx-dark);--pf-muted:var(--hx-neutral);--pf-border:var(--hx-border);--pf-accent:var(--hx-primary);
+  --project-map-pin:#B6D552;
+}
+html[data-workspace="harmonix"] .ssc-pform :is(.ssc-pform-header h1,.ssc-pform-section-title h2){color:var(--hx-dark);}
+html[data-workspace="harmonix"] .ssc-pform :is(.ssc-pform-eyebrow,.ssc-pform-section-index,.ssc-pform-back:hover,.ssc-pform-required,.ssc-pform-map-note svg,.ssc-pform-help-row svg){color:var(--hx-action);}
+html[data-workspace="harmonix"] .ssc-pform :is(.ssc-pform-section-icon,.ssc-pform-help){background:var(--hx-primary-soft);color:var(--hx-action);border-color:#DBE7BB;}
+html[data-workspace="harmonix"] .ssc-pform :is(.ssc-pform-card,.ssc-pform-map-card){border-color:var(--hx-border);background:var(--hx-card);}
+html[data-workspace="harmonix"] .ssc-pform :is(.ssc-pform-field input,.ssc-pform-field select,.ssc-pform-field textarea,.ssc-pmap-search-input){border-color:#D5E1CC;background:var(--hx-input);color:var(--hx-dark);}
+html[data-workspace="harmonix"] .ssc-pform :is(.ssc-pform-field input,.ssc-pform-field textarea,.ssc-pmap-search-input):focus-within{border-color:#829F37;box-shadow:0 0 0 3px #B6D55225;}
+html[data-workspace="harmonix"] .ssc-pform .ssc-pmap-search>button{background:var(--hx-primary);color:var(--hx-dark);border-color:var(--hx-primary);}
+html[data-workspace="harmonix"] .ssc-pform .ssc-pmap-search>button:hover:not(:disabled){background:var(--hx-primary-hover);border-color:var(--hx-primary-hover);}
+html[data-workspace="harmonix"] .ssc-pform :is(.ssc-pmap-controls button,.ssc-pmap-buttons button):hover:not(:disabled){background:var(--hx-primary-soft);color:#465A1F;border-color:#BACF81;}
+html[data-workspace="harmonix"] .ssc-pform .ssc-pmap-pin{color:var(--hx-primary);}
+
+/* Team directory, members, filters and safe interaction states. */
+html[data-workspace="harmonix"] .ssc-v2-page {--v2-pink:var(--hx-action);--v2-text:var(--hx-dark);--v2-border:var(--hx-border);--v2-muted:var(--hx-neutral);}
+html[data-workspace="harmonix"] .ssc-v2-page :is(.ssc-v2-hero h1,.ssc-v2-panel-title h2,.ssc-v2-member h3,.ssc-v2-stat strong,.ssc-v2-profile h3,.ssc-v2-toggle-copy strong){color:var(--hx-dark);}
+html[data-workspace="harmonix"] .ssc-v2-page :is(.ssc-v2-kicker,.ssc-v2-filter-label span,.ssc-v2-member .ssc-v2-inline,.ssc-v2-mail:hover){color:var(--hx-action);}
+html[data-workspace="harmonix"] .ssc-v2-page :is(.ssc-v2-stat,.ssc-v2-panel,.ssc-v2-member,.ssc-v2-filter-panel){border-color:var(--hx-border);}
+html[data-workspace="harmonix"] .ssc-v2-team .ssc-v2-person,
+html[data-workspace="harmonix"] .ssc-v2-team :is(.ssc-v2-person-1,.ssc-v2-person-2,.ssc-v2-person-3){background:#ECF5D9;color:#53671F;}
+html[data-workspace="harmonix"] .ssc-v2-page :is(.ssc-v2-profile-logo,.ssc-v2-toggle-icon){background:var(--hx-primary-soft);color:var(--hx-action);border-color:var(--hx-border);}
+html[data-workspace="harmonix"] .ssc-v2-page :is(.ssc-v2-search,.ssc-v2-select select,.ssc-v2-filter-controls select,.ssc-v2-filter-controls input):focus-within{outline:2px solid #90A943;outline-offset:1px;}
+html[data-workspace="harmonix"] .ssc-v2-page .ssc-v2-progress-track span{background:#9FBC48;}
+html[data-workspace="harmonix"] .ssc-v2-page .ssc-v2-toggle-row input:checked+.ssc-v2-switch{background:#8EAE32;}
+html[data-workspace="harmonix"] .ssc-v2-page .ssc-v2-toggle-row input:focus-visible+.ssc-v2-switch{outline:3px solid #B6D552;outline-offset:2px;}
+html[data-workspace="harmonix"] .ssc-v2-page .ssc-v2-note{background:#F5F9EA;border:1px solid #E1ECCF;color:#546451;}
+html[data-workspace="harmonix"] .ssc-v2-page :is(.ssc-v2-member-projects span,.ssc-v2-filter-label,.ssc-v2-profile){border-color:var(--hx-border);}
+
+/* Analytics and reports: links, filters, badges and scores harmonized. */
+html[data-workspace="harmonix"] .insight-page {--i-pink:var(--hx-primary);--i-ink:var(--hx-dark);--i-sub:var(--hx-neutral);--i-border:var(--hx-border);}
+html[data-workspace="harmonix"] .insight-page :is(.insight-eyebrow,.insight-table-link,.insight-attention:not(.is-urgent) button){color:var(--hx-action);}
+html[data-workspace="harmonix"] .insight-page :is(.insight-filter-icon,.insight-stat-icon,.insight-recent-symbol){background:#F0F7DA;color:#526823;}
+html[data-workspace="harmonix"] .insight-page :is(.insight-filters select,.insight-filters input):focus{border-color:#8BA740;box-shadow:0 0 0 3px #B6D55226;}
+html[data-workspace="harmonix"] .insight-page .insight-main-action:hover{background:#F5F9E9;border-color:#BDD386;color:#40581C;}
+html[data-workspace="harmonix"] .insight-page :is(.insight-table td,.insight-table th,.insight-recent-list button){border-color:var(--hx-border);}
+html[data-workspace="harmonix"] .insight-page .insight-recent-list button:hover{background:#F6FAEC;}
+html[data-workspace="harmonix"] .ssc-report-library :is(.ssc-report-file-icon,.ssc-report-title .ssc-report-file-icon){color:#556C24;background:#F0F7DB;}
+html[data-workspace="harmonix"] .ssc-report-library :is(.ssc-report-search,.ssc-report-select select){border-color:var(--hx-border);}
+html[data-workspace="harmonix"] .ssc-report-library .ssc-report-table tbody tr:hover td{background:#F7FAF0;}
+
+/* Modal/forms shared across workspace pages. Do not use !important so genuine
+   error and destructive states can retain their semantic red styling. */
+html[data-workspace="harmonix"] .workspace-page :is(.form-control,.input,.form-input):focus-within{border-color:#8AA43A;box-shadow:0 0 0 3px #B6D55222;}
+html[data-workspace="harmonix"] :is(.ssc-theme-options button.selected,.ssc-v2-toggle-list input:checked + .ssc-v2-switch){border-color:var(--hx-primary);}
+/* Dark mode: preserve contrast without light-theme background bleed. */
+html[data-workspace="harmonix"][data-theme="dark"]{
+  --hx-primary:#B6D552;--hx-primary-hover:#C3DF68;--hx-primary-soft:#33462B;
+  --hx-action:#D0EA95;--hx-dark:#F0F6EC;--hx-body:#E5EFE4;
+  --hx-neutral:#B9C9B7;--hx-border:#405344;--hx-input:#223128;
+  --hx-card:#1C2921;--hx-background:#121E18;--pf-accent:#B6D552;
+}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.pd-page .pd-hero,.pd-page .pd-kpi,.pd-page .pd-panel,.pd-page .pd-hxc-entry,.ssc-pform .ssc-pform-card,.ssc-v2-team .ssc-v2-member,.ssc-v2-page .ssc-v2-panel,.insight-page .insight-filter-card,.insight-page .insight-panel){background:var(--hx-card);border-color:var(--hx-border);}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.pd-page .pd-record-row,.pd-page .pd-quick-actions button,.insight-page .insight-recent-list button){background:transparent;}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.pd-page .pd-record-row,.pd-page .pd-quick-actions button,.insight-page .insight-recent-list button):hover{background:#2B3D2E;}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.pd-page .pd-completion,.pd-page .pd-note:not(.is-safety),.pd-page .pd-map-placeholder,.ssc-v2-page .ssc-v2-note){background:#293B2C;border-color:#435B41;color:#C6D7C3;}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.pd-page .pd-project-avatar,.pd-page .pd-kpi-icon,.pd-page .pd-panel-icon,.pd-page .pd-record-icon,.pd-page .pd-empty>span,.pd-page .pd-date-tile,.pd-page .pd-quick-actions button>span:first-child,.ssc-pform .ssc-pform-section-icon,.ssc-v2-page .ssc-v2-toggle-icon,.ssc-v2-page .ssc-v2-profile-logo){background:#34492F;color:#D3EAA0;border-color:#506A45;}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.pd-page .pd-kpi.is-alert .pd-kpi-icon){background:#513C2B;color:#F1BA7B;}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.pd-page .pd-document-filter select,.ssc-pform .ssc-pform-field input,.ssc-pform .ssc-pform-field select,.ssc-pform .ssc-pform-field textarea,.ssc-pform .ssc-pmap-search-input,.insight-page .insight-filters select,.insight-page .insight-filters input){background:var(--hx-input);border-color:var(--hx-border);color:var(--hx-dark);}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.pd-page .pd-hxc-ready){background:#314626;border-color:#5A7544;color:#D6F1A6;}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.pd-page .pd-crumb button:hover,.pd-page .pd-text-btn,.pd-page .pd-map-link,.ssc-pform .ssc-pform-eyebrow,.ssc-v2-page .ssc-v2-kicker,.insight-page .insight-eyebrow){color:#C9E78D;}
+/* The HXC printed document & compliance grades deliberately retain paper styles. */
+@media print{
+  html[data-workspace="harmonix"] .hwd-document{background:white;color:#1F2A2E;}
+}
+/* Dark KPI tiles must retain light/lime numbers (not dark heading ink). */
+html[data-workspace="harmonix"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat strong{color:#E0F2A8;}
+html[data-workspace="harmonix"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat :is(.ssc-v2-stat-label,.ssc-v2-stat-label svg,.ssc-v2-stat small){color:#E0ECDD;}
+html[data-workspace="harmonix"][data-theme="dark"] .ssc-v2-team .ssc-v2-stat strong{color:#E4F7B5;}
+
+/* V9 — Harmonix top-sidebar lockup matches the SSC layout shown in the reference:
+   compact logo | divider | two-line title, then a subtitle, a full-width rule,
+   and the unchanged CURRENT WORKSPACE switcher below. Colors remain Harmonix-only. */
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated {
+  display:block;
+  box-sizing:border-box;
+  flex:0 0 auto;
+  width:100%;
+  min-height:0;
+  margin:0 0 19px;
+  padding:19px 20px 17px;
+  border:0;
+  border-bottom:1px solid rgba(211,230,193,.16);
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated::after {content:none;}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:47px;
+  gap:8px;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-mark.is-harmonix {
+  display:flex;
+  align-items:center;
+  flex:1 1 auto;
+  min-width:0;
+  min-height:47px;
+  width:auto;
+  height:auto;
+  padding:0;
+  margin:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-mark.is-harmonix img {
+  display:block;
+  flex:0 0 97px;
+  width:97px;
+  height:46px;
+  max-width:none;
+  padding:0;
+  margin:0;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  background:transparent;
+  filter:none;
+  object-fit:contain;
+  object-position:left center;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-mark.is-harmonix .ssc-brand-divider {
+  display:block;
+  flex:0 0 1px;
+  width:1px;
+  height:31px;
+  margin:0 12px 0 8px;
+  background:#526052;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-mark.is-harmonix .ssc-brand-title {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-width:0;
+  gap:4px;
+  white-space:normal;
+  line-height:1.15;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-mark.is-harmonix .ssc-brand-title strong {
+  color:#F5F8E9;
+  font-size:12.5px;
+  font-weight:750;
+  letter-spacing:-.2px;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-mark.is-harmonix .ssc-brand-title > span {
+  color:#CAD5C2;
+  font-size:11.5px;
+  font-weight:550;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-product-caption {
+  margin:10px 0 0;
+  color:#B9C8B1;
+  font-size:10.5px;
+  font-weight:500;
+  line-height:1.5;
+  letter-spacing:.01em;
+}
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-switcher-wrap {
+  margin-top:0;
+}
+/* Keep the original, inset workspace row below the heading and divider. */
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-switcher-label {
+  margin-bottom:9px;
+}
+@media(max-width:1100px) {
+  html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated {padding-left:17px;padding-right:16px;}
+  html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-mark.is-harmonix img {flex-basis:91px;width:91px;}
+  html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-mark.is-harmonix .ssc-brand-divider {margin-left:7px;margin-right:10px;}
+}
+@media(max-width:830px) {
+  html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated {padding:17px 16px 17px;margin-bottom:18px;}
+  html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-brand-mark.is-harmonix img {flex-basis:96px;width:96px;height:46px;}
+  html[data-workspace="harmonix"] .sidebar.ssc-sidebar .ssc-sidebar-head--integrated .ssc-mobile-close {flex:0 0 auto;color:#F0F7D9;}
+}

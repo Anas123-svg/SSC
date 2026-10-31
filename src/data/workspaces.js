@@ -3,7 +3,7 @@ import { DEFAULT_MODULES, normalizeModules } from '../app/moduleRegistry.js';
 export const ADMIN_WORKSPACE = { id: 'admin', type: 'admin', name: 'Admin', client: null, initials: 'AD', color: '#ee3861' };
 
 export const workspaceSeed = [
-  { id: 'harmonix', name: 'Harmonix', client: 'Harmonix Developments', initials: 'HX', color: '#385ed4' },
+  { id: 'harmonix', name: 'Harmonix', client: 'Harmonix Developments', initials: 'HX', color: '#B6D552' },
   { id: 'northfield', name: 'Northfield Group', client: 'Northfield Group', initials: 'NG', color: '#00988f' },
   { id: 'meridian', name: 'Meridian Contractors', client: 'Meridian Contractors', initials: 'MC', color: '#9871d5' },
 ].map(w => ({ ...w, type: 'client', status: 'Active', clientId: `client-${w.id}`, modules: DEFAULT_MODULES.filter(id => w.id === 'harmonix' || !(w.id === 'northfield' ? ['schedule', 'team', 'analytics'] : ['schedule', 'documents', 'analytics']).includes(id)) }));

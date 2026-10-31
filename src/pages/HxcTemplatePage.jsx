@@ -16,16 +16,17 @@ import {
   getReportConfig, validateReportConfig, cloneReportConfig, DEFAULT_REPORT_CONFIG,
 } from '../features/templates/hxcReportConfig.js';
 import '../styles/hxc-template-studio.css';
+import RichTextEditor from '../features/templates/RichTextEditor.jsx';
 
 const LABELS = Object.fromEntries(INPUT_TYPES);
-const NON_FIELDS = new Set(['heading', 'paragraph', 'list', 'row', 'columns', 'divider']);
+const NON_FIELDS = new Set(['heading', 'paragraph', 'list', 'row', 'columns', 'divider', 'richtext']);
 const CHOICES = new Set(['radio', 'checkbox', 'select', 'list']);
 const NESTED = new Set(['row', 'columns']);
 const QUICK = [
   ['radio', 'Choice', ListChecks], ['text', 'Text', Type],
   ['heading', 'Heading', FileText], ['table', 'Table', Table2],
   ['columns', 'Columns', Columns3], ['photo', 'Photo', Image],
-  ['signature', 'Signature', Signature],
+  ['signature', 'Signature', Signature], ['richtext','Document text',FileText],
 ];
 const swap = (list, index, delta) => {
   const target = index + delta;
@@ -141,6 +142,7 @@ function BlockCard({ block, index, total, onChange, onRemove, onDuplicate, onUp,
         </>}
       </div>
       {CHOICES.has(block.type) && <OptionsEditor options={block.options || []} onChange={options=>set({options})} title={block.type==='list'?'List items':'Answer options'}/ >}
+      {block.type==='richtext' && <RichTextEditor disabled={disabled} value={block.html || ''} onChange={html=>set({html})}/>}
       {block.type==='table' && <TableEditor block={block} set={set}/>}
       {nested && <div className="hxstudio-child-layout"><div className="hxstudio-editor-caption"><strong>Fields in this {block.type}</strong><span>Each field can be edited, moved or removed individually.</span></div>
         <div className={'hxstudio-children '+(block.type==='columns'?'as-columns':'')}>
@@ -200,14 +202,14 @@ export default function HxcTemplatePage({onBack}) {
     <div className="hxstudio-breadcrumb"><button type="button" onClick={exit}><ArrowLeft size={15}/> Back to templates</button><span>/</span><strong>HXC Audit Template</strong></div>
     <header className="hxstudio-hero">
       <div className="hxstudio-hero-icon"><ClipboardList size={25}/></div>
-      <div className="hxstudio-hero-text"><span className="hxstudio-eyebrow">TEMPLATE WORKSPACE</span><h1>HXC Audit Template</h1><p>Build your inspection, one field at a time. Select a section, edit its contents, then save.</p></div>
+      <div className="hxstudio-hero-text"><span className="hxstudio-eyebrow">TEMPLATE WORKSPACE</span><h1>HXC Audit Template</h1><p>Edit the audit on a document-style canvas. Format text, add tables and inspection fields, then save.</p></div>
       <div className="hxstudio-hero-actions">
         <span className={'hxstudio-save-state '+(dirty?'is-unsaved':'is-saved')}><span/>{dirty?'Unsaved changes':'All changes saved'}</span>
         {isAdmin && <button className="hxstudio-save-button" type="button" onClick={save}><Save size={16}/> Save changes</button>}
       </div>
     </header>
     <div className="hxstudio-modebar" role="tablist" aria-label="Template workspace views">
-      <button type="button" role="tab" aria-selected={view==='builder'} className={view==='builder'?'active':''} onClick={()=>setView('builder')}><LayoutGrid size={17}/> Builder</button>
+      <button type="button" role="tab" aria-selected={view==='builder'} className={view==='builder'?'active':''} onClick={()=>setView('builder')}><LayoutGrid size={17}/> Document editor</button>
       <button type="button" role="tab" aria-selected={view==='preview'} className={view==='preview'?'active':''} onClick={()=>setView('preview')}><Eye size={17}/> Preview form</button>
       <button type="button" role="tab" aria-selected={view==='settings'} className={view==='settings'?'active':''} onClick={()=>setView('settings')}><Settings2 size={17}/> Report layout & tables</button>
       <span className="hxstudio-mode-count">{schema.length} sections · {countQuestions(schema)} fields</span>
@@ -239,7 +241,7 @@ export default function HxcTemplatePage({onBack}) {
         </div>
         {isAdmin && <div className="hxstudio-section-fields"><label><span>Section title</span><input value={selectedSection.title} onChange={e=>setSection(selectedSection.id,{title:e.target.value})}/></label><label><span>Section description <em>optional</em></span><textarea rows={2} placeholder="Add a short note for inspectors..." value={selectedSection.description||''} onChange={e=>setSection(selectedSection.id,{description:e.target.value})}/></label></div>}
         <div className="hxstudio-block-list">
-          <div className="hxstudio-block-list-head"><strong>Section content</strong><span>{selectedSection.blocks.length} items</span></div>
+          <div className="hxstudio-block-list-head"><strong>Document & inspection content</strong><span>{selectedSection.blocks.length} items</span></div>
           {selectedSection.blocks.map((block,i)=><BlockCard key={block.id} block={block} index={i} total={selectedSection.blocks.length} activeId={activeId} setActiveId={setActiveId} disabled={!isAdmin}
             onChange={value=>setSection(selectedSection.id,{blocks:selectedSection.blocks.map((v,j)=>i===j?value:v)})}
             onRemove={()=>{setSection(selectedSection.id,{blocks:selectedSection.blocks.filter((_,j)=>i!==j)});if(activeId===block.id)setActiveId(null);}}

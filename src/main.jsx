@@ -18,7 +18,12 @@ import './styles/admin-simple.css';
 import './styles/hxc-document-form.css';
 import './styles/pwa-mobile.css';
 import './styles/pwa-readability.css';
-
+import './styles/appearance-upgrade.css';
+import './styles/harmonix-finish.css';
+import './styles/harmonix-inspections-templates.css';
+import './styles/harmonix-complete-audit.css';
+import './styles/theme-controls-v10.css';
+import './styles/harmonix-summary-cards-v11.css';
 initPWA();
 
 createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>);

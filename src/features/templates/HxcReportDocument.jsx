@@ -59,14 +59,14 @@ function ChecklistTable({ section, number, answers, setAnswer, disabled, config 
   const hasCompliance = columns.some(c => c.id === 'compliance');
   const renderCell = (col, block) => {
     const compliance = isComplianceBlock(block);
-    const decorative = ['heading','paragraph','list','row','columns','divider'].includes(block.type);
+    const decorative = ['heading','paragraph','list','row','columns','divider','richtext'].includes(block.type);
     if (col.id === 'ref') return <span className="hwd-ref">{block.ref || ''}</span>;
     if (col.id === 'requirement') return <div className="hwd-requirement">
       {(compliance || ['heading','paragraph','row','columns'].includes(block.type)) && block.label}
       {(!compliance && !decorative || compliance && !hasCompliance) && <FormBlock block={block} answers={answers} setAnswer={setAnswer} disabled={disabled}/>}
       {decorative && !['heading','paragraph'].includes(block.type) && <FormBlock block={block} answers={answers} setAnswer={setAnswer} disabled={disabled}/>}
     </div>;
-    if (col.id === 'compliance') return compliance && <select aria-label={`Compliance for ${block.ref || block.label}`} value={normalizeCompliance(answers[block.id] || '')} disabled={disabled} onChange={e => setAnswer(block.id, e.target.value)}>
+    if (col.id === 'compliance') return compliance && <select className={'hwd-compliance-select status-' + (normalizeCompliance(answers[block.id] || '') || 'unset').replace('/','')}  aria-label={`Compliance for ${block.ref || block.label}`} value={normalizeCompliance(answers[block.id] || '')} disabled={disabled} onChange={e => setAnswer(block.id, e.target.value)}>
       <option value="">C / MI / MA / N/A</option><option value="C">C</option><option value="MI">MI</option><option value="MA">MA</option><option value="N/A">N/A</option>
     </select>;
     const key = col.id === 'evidence' ? `${block.id}:evidence` : col.id === 'action' ? `${block.id}:action` : `${block.id}:column:${col.id}`;
@@ -75,7 +75,7 @@ function ChecklistTable({ section, number, answers, setAnswer, disabled, config 
   const includes = id => columns.some(col=>col.id === id);
   return <><div className="hwd-table-wrap"><table className="hwd-table hwd-checklist-table">
     <thead><tr>{columns.map(col=><th key={col.id}>{col.label}</th>)}</tr></thead>
-    <tbody>{(section.blocks || []).map(block => <tr key={block.id}>{columns.map(col=><td key={col.id} data-label={col.label}>{renderCell(col,block)}</td>)}</tr>)}
+    <tbody>{(section.blocks || []).map(block => block.type === 'richtext' ? <tr key={block.id} className="hwd-document-content-row"><td colSpan={columns.length}><FormBlock block={block} answers={answers} setAnswer={setAnswer} disabled={disabled}/></td></tr> : <tr key={block.id}>{columns.map(col=><td key={col.id} data-label={col.label}>{renderCell(col,block)}</td>)}</tr>)}
       <tr className="hwd-section-score">{columns.map((col,i) => <td key={col.id} data-label={col.label}>
         {col.id === 'requirement' || i === 0 ? `SECTION ${number} ${config.sectionScoreLabel}` : null}
         {col.id === 'compliance' ? <ScoreField section={section} answers={answers} setAnswer={setAnswer} disabled={disabled}/> : null}

@@ -5,7 +5,7 @@ export const INPUT_TYPES = [
   ['radio','Radio choice'], ['checkbox','Checkbox list'], ['select','Dropdown'], ['text','Short text'],
   ['textarea','Long text'], ['number','Number'], ['date','Date'], ['time','Time'], ['email','Email'],
   ['signature','Digital signature'], ['photo','Photo upload'], ['divider','Divider'],
-  ['table','Table'], ['row','Row'], ['columns','Columns'], ['heading','Heading'], ['paragraph','Description'], ['list','Bullet list']
+  ['table','Table'], ['richtext','Formatted document text'], ['row','Row'], ['columns','Columns'], ['heading','Heading'], ['paragraph','Description'], ['list','Bullet list']
 ];
 export const HXC_COMPLIANCE_OPTIONS = ['C', 'MI', 'MA', 'N/A'];
 export const DEFAULT_HXC_SCHEMA = hxcTemplate.map(section => ({
@@ -38,8 +38,9 @@ export const getHxcSchema = template => {
 };
 export const newBlock = (type = 'radio') => ({
   id: createBlockId(), type,
-  label: type === 'heading' ? 'Section heading' : type === 'paragraph' ? 'Description text' : type === 'signature' ? 'Signature' : type === 'photo' ? 'Photo evidence' : type === 'divider' ? 'Section divider' : 'New question',
+  label: type === 'richtext' ? 'Document content' : type === 'heading' ? 'Section heading' : type === 'paragraph' ? 'Description text' : type === 'signature' ? 'Signature' : type === 'photo' ? 'Photo evidence' : type === 'divider' ? 'Section divider' : 'New question',
   help: '', ref: '', evidenceHint: '', required: false,
+  ...(type === 'richtext' ? { html: '<p>Type your formatted document content here.</p>' } : {}),
   ...(type === 'radio' ? { options: [...HXC_COMPLIANCE_OPTIONS] } : {}),
   ...(['checkbox','select'].includes(type) ? { options: ['Option 1', 'Option 2'] } : {}),
   ...(type === 'list' ? { options: ['First item', 'Second item'] } : {}),
@@ -47,7 +48,7 @@ export const newBlock = (type = 'radio') => ({
   ...(['row','columns'].includes(type) ? { children: [newBlock('text'), newBlock('text')] } : {}),
 });
 export const formBlocks = blocks => (blocks || []).flatMap(block => [block, ...formBlocks(block.children)]);
-export const countQuestions = schema => (schema || []).reduce((n, s) => n + formBlocks(s.blocks).filter(b => !['heading','paragraph','list','row','columns','divider'].includes(b.type)).length, 0);
+export const countQuestions = schema => (schema || []).reduce((n, s) => n + formBlocks(s.blocks).filter(b => !['heading','paragraph','list','row','columns','divider','richtext'].includes(b.type)).length, 0);
 export const editableTypes = new Set(INPUT_TYPES.map(([type]) => type));
 export function validateSchema(schema) {
   if (!Array.isArray(schema) || !schema.length) return 'Add at least one section.';
@@ -73,7 +74,7 @@ export const isComplianceBlock = b => b.type === 'radio' && (
 );
 export const normalizeCompliance = value => ({'Compliant':'C','Minor issue':'MI','Major issue':'MA'}[value] || value);
 export function completionStats(schema, answers) {
-  const questions = schema.flatMap(s => formBlocks(s.blocks)).filter(b => !['heading','paragraph','list','row','columns','divider'].includes(b.type));
+  const questions = schema.flatMap(s => formBlocks(s.blocks)).filter(b => !['heading','paragraph','list','row','columns','divider','richtext'].includes(b.type));
   return { total: questions.length, answered: questions.filter(b => {
     const a = answers?.[b.id];
     return Array.isArray(a) ? a.length > 0 : a !== '' && a !== null && a !== undefined;

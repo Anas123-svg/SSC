@@ -1,4 +1,6 @@
 import React from 'react';
+import { sanitizeRichText } from './richText.js';
+import { isComplianceBlock, normalizeCompliance } from './hxcSchema.js';
 import DigitalSignature from './DigitalSignature.jsx';
 import PhotoUploadField from './PhotoUploadField.jsx';
 const isBlank = v => v === undefined || v === null || v === '';
@@ -6,6 +8,7 @@ export function FormBlock({ block, answers, setAnswer, disabled = false }) {
   const id = `inspection-${block.id}`;
   const value = answers?.[block.id];
   const set = v => setAnswer(block.id, v);
+  if (block.type === 'richtext') return <div className="hxc-rich-content" dangerouslySetInnerHTML={{ __html: sanitizeRichText(block.html || '') }} />;
   if (block.type === 'divider') return <hr className="hxc-block-divider"/>;
   if (block.type === 'signature') return <div className="sw-field"><strong>{block.label}</strong><DigitalSignature label={block.label} value={value || ''} onChange={set} disabled={disabled}/></div>;
   if (block.type === 'photo') return <div className="sw-field"><strong>{block.label}</strong><PhotoUploadField label={block.label} value={value || ''} onChange={set} disabled={disabled}/></div>;
@@ -22,7 +25,7 @@ export function FormBlock({ block, answers, setAnswer, disabled = false }) {
   }
   const options = (block.options || []).filter(Boolean);
   return <div className="sw-field"><label htmlFor={!['radio','checkbox'].includes(block.type) ? id : undefined}>{block.label}{block.required ? <span className="sw-required"> *</span> : ''}</label>{block.help && <small>{block.help}</small>}
-    {block.type === 'radio' && <div className="sw-choices">{options.map(option => <label key={option}><input type="radio" name={id} value={option} checked={value === option} disabled={disabled} onChange={() => set(option)}/>{option}</label>)}</div>}
+    {block.type === 'radio' && <div className={"sw-choices" + (isComplianceBlock(block) ? " sw-compliance-choices" : "")}>{options.map(option => <label key={option} className={isComplianceBlock(block) ? "sw-compliance-choice status-" + (normalizeCompliance(option) === "N/A" ? "NA" : normalizeCompliance(option)) + (value === option ? " selected" : "") : ""}><input type="radio" name={id} value={option} checked={value === option} disabled={disabled} onChange={() => set(option)}/>{option}</label>)}</div>}
     {block.type === 'checkbox' && <div className="sw-choices">{options.map(option => <label key={option}><input type="checkbox" checked={Array.isArray(value) && value.includes(option)} disabled={disabled} onChange={e => set(e.target.checked ? [...(Array.isArray(value)?value:[]),option] : (Array.isArray(value)?value:[]).filter(x => x !== option))}/>{option}</label>)}</div>}
     {block.type === 'select' && <select id={id} value={isBlank(value)?'':value} disabled={disabled} onChange={e => set(e.target.value)}><option value="">Select an option</option>{options.map(option => <option key={option} value={option}>{option}</option>)}</select>}
     {block.type === 'textarea' && <textarea id={id} rows={3} disabled={disabled} value={value ?? ''} onChange={e => set(e.target.value)}/>}

@@ -8,11 +8,11 @@ const sidebar = readFileSync(new URL('../src/components/layout/Sidebar.jsx', imp
 const switcher = readFileSync(new URL('../src/components/layout/WorkspaceSwitcher.jsx', import.meta.url), 'utf8');
 const css = readFileSync(new URL('../src/styles/workspace-sidebar.css', import.meta.url), 'utf8');
 
-test('Harmonix receives the authentic Word-template logo, including legacy saved workspaces', () => {
+test('Harmonix receives the uploaded transparent logo, including legacy saved workspaces', () => {
   const seeded = { id: 'harmonix', name: 'Harmonix', initials: 'HX' };
   assert.equal(getWorkspaceLogo(seeded), '/harmonix-logo.png');
   const source = readFileSync(new URL('../public/harmonix-logo.png', import.meta.url));
-  assert.equal(createHash('sha256').update(source).digest('hex'), 'e90608c8e6527d57653ebb95da9ac5c197f9a1878562a8f5905cff563b590ca5');
+  assert.equal(createHash('sha256').update(source).digest('hex'), '631a85eaf6dd7d7650b336b6a3f1204cf757b59ce1d481d5f761f30270cd6b75');
 });
 
 test('Admin/other client workspaces do not display Harmonix branding; uploaded logos override defaults', () => {

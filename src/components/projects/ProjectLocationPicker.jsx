@@ -140,7 +140,7 @@ export default function ProjectLocationPicker({ latitude, longitude, onChange, o
     <div className="ssc-pmap-surface" ref={hostRef}>
       <div className="ssc-pmap-tiles" role="application" tabIndex={0} aria-label="Interactive location map. Click to place a project pin, drag to pan. Arrow keys pan, plus and minus keys zoom, Enter pins the map center." onKeyDown={keyboard} onPointerDown={pointerDown} onPointerMove={pointerMove} onPointerUp={pointerUp} onPointerCancel={() => {gesture.current = null;}}>
         {!offline && tiles.map(tile => <img key={tile.key} src={tile.url} alt="" draggable={false} onError={() => setTileFailed(true)} style={{ left: tile.left, top: tile.top }} />)}
-        {marker && marker.left >= -20 && marker.left <= size.width + 20 && marker.top >= -20 && marker.top <= size.height + 20 && <div className="ssc-pmap-pin" style={{ left: marker.left, top: marker.top }} aria-hidden="true"><MapPin size={34} fill="#d84b73" color="#fff" strokeWidth={1.7}/></div>}
+        {marker && marker.left >= -20 && marker.left <= size.width + 20 && marker.top >= -20 && marker.top <= size.height + 20 && <div className="ssc-pmap-pin" style={{ left: marker.left, top: marker.top }} aria-hidden="true"><MapPin size={34} fill="var(--project-map-pin, #d84b73)" color="#fff" strokeWidth={1.7}/></div>}
         {!pin && <div className="ssc-pmap-hint"><Target size={15}/> Click on the map to drop a pin</div>}
         {(offline || tileFailed) && <div className="ssc-pmap-tile-error">{offline ? 'Offline map: tiles and address search are unavailable. Saved coordinates remain accessible.' : 'Map imagery unavailable. You can still enter coordinates below.'}</div>}
       </div>

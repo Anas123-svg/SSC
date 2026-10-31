@@ -5,9 +5,10 @@ import { RecordForm, Button } from '../components/common/WorkspaceUI.jsx';
 import { workspaceFields } from '../components/dialogs/CreateWorkspaceDialog.jsx';
 import { migrateDatabase } from '../data/repository.js';
 import { getWorkspaceLogo } from '../data/workspaceBranding.js';
+import AppearanceToggle from '../components/layout/AppearanceToggle.jsx';
 
 export default function SettingsPage() {
-  const { activeWorkspaceId, activeWorkspace, db, commit, saveRecord, setToast, isAdmin } = usePortal();
+  const { activeWorkspaceId, activeWorkspace, db, commit, saveRecord, setToast, isAdmin, resolvedAppearance } = usePortal();
   const admin = activeWorkspaceId === 'admin';
   const [editing,setEditing] = useState(false),[error,setError] = useState('');
   const prefs = admin ? db.prefs || {} : activeWorkspace.prefs || {};
@@ -25,6 +26,10 @@ export default function SettingsPage() {
       {!admin&&isAdmin&&<div className="ssc-v2-card-foot"><Button onClick={()=>setEditing(true)}>Edit workspace details <ExternalLink size={15}/></Button></div>}
     </section>
     <section className="ssc-v2-panel"><div className="ssc-v2-panel-title"><h2>Notifications</h2><p>Select the alerts you would like to receive when notification delivery is connected.</p></div><div className="ssc-v2-toggle-list">{choices.map(c=><label key={c.key} className="ssc-v2-toggle-row"><span className="ssc-v2-toggle-icon"><Bell size={17}/></span><span className="ssc-v2-toggle-copy"><strong>{c.label}</strong><small>{c.description}</small></span><input type="checkbox" checked={!!prefs[c.key]} onChange={e=>update(c.key,e.target.checked)} aria-label={c.label}/><span aria-hidden="true" className="ssc-v2-switch"/></label>)}</div><div className="ssc-v2-note"><Info size={16}/> Settings are saved locally. No automatic email or push notifications are currently sent.</div></section></div>
+    <section className="ssc-v2-panel ssc-v2-appearance-settings"><div className="ssc-v2-panel-title"><h2>Appearance & dark mode</h2><p>Switch between light and dark using one button. Harmonix uses its lime and charcoal brand palette, while SSC Admin retains its original pink and charcoal colours.</p></div>
+      <div className="ssc-theme-settings-row"><AppearanceToggle/><span>Use the sun/moon button to switch between light and dark.</span></div>
+      <p className="ssc-v2-note"><Info size={16}/> Currently displaying {resolvedAppearance} mode. Your choice remains available offline and follows you between workspaces on this device. Printed reports always use a light document sheet.</p>
+    </section>
     {admin&&<section className="ssc-v2-panel ssc-v2-maintenance"><div><div className="ssc-v2-panel-title"><h2>Browser data & backup</h2><p>Preserve a copy of the current workspace records and HXC audits before making substantial changes.</p></div><div className="ssc-v2-note"><Info size={16}/> This is a browser-local demonstration. Backup files can contain private site and contact information; keep them secure.</div></div><div className="ssc-v2-maintenance-actions"><Button primary onClick={backup}><Download size={16}/> Export JSON backup</Button><Button onClick={reset}><ArchiveRestore size={16}/> Restore starter data</Button></div></section>}
     {editing&&<RecordForm title="Workspace settings" fields={[...workspaceFields.filter(f=>f.key!=='client' && (isAdmin || f.key!=='modules')),{key:'clientId',label:'Client / company',type:'select',required:true,options:db.clients.map(c=>({value:c.id,label:c.name}))}]} initial={activeWorkspace} close={()=>setEditing(false)} save={v=>saveRecord('workspaces',v)}/>}
   </div>;

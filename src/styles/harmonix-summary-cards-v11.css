@@ -1,0 +1,66 @@
+/* V11: Harmonix dark-mode summary card colour consistency.
+   The previous shared dark rule made metric title rows teal-blue. A metric
+   header is a layout container, not a callout: its background stays clear.
+   All colours below are scoped to Harmonix's Team and Projects screens only.
+*/
+html[data-workspace="harmonix"][data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) :is(.ssc-v2-team-stats,.ssc-v2-project-stats) > .ssc-v2-stat {
+  background:#232F28;
+  border:1px solid #405247;
+  border-radius:14px;
+  box-shadow:none;
+  color:#F5F8F1;
+}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label {
+  display:flex;
+  width:100%;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0;
+  margin:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  background-color:transparent;
+  box-shadow:none;
+  color:#EBF2E9;
+  font-size:13px;
+  font-weight:680;
+  line-height:1.4;
+}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label > span {
+  background:transparent;
+  color:#EBF2E9;
+  max-width:calc(100% - 46px);
+}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label > svg {
+  flex:0 0 35px;
+  width:35px;
+  height:35px;
+  padding:8px;
+  border:1px solid #576E42;
+  border-radius:10px;
+  background:#374733;
+  color:#C4E37A;
+}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat > strong {
+  color:#FAFCF6;
+  font-size:34px;
+  font-weight:800;
+  line-height:1.08;
+  letter-spacing:-.7px;
+  font-variant-numeric:tabular-nums;
+}
+html[data-workspace="harmonix"][data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat > small {
+  color:#B6C5B6;
+  font-size:12px;
+  font-weight:500;
+  line-height:1.5;
+}
+@media(max-width:700px){
+  html[data-workspace="harmonix"][data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat > strong{font-size:30px;}
+}
+@media(max-width:440px){
+  html[data-workspace="harmonix"][data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label{font-size:12px;}
+  html[data-workspace="harmonix"][data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label > svg{width:31px;height:31px;flex-basis:31px;padding:7px;}
+}

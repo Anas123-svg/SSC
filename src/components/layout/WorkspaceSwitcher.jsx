@@ -26,7 +26,7 @@ export default function WorkspaceSwitcher() {
     const logo = getWorkspaceLogo(w);
     return logo ? <img src={logo} alt="" loading="eager"/> : w.id === 'admin' ? <LayoutGrid size={19} aria-hidden="true"/> : w.initials;
   };
-  const avatarClass = w => getWorkspaceLogo(w) ? ' ssc-logo-avatar' : '';
+  const avatarClass = w => getWorkspaceLogo(w) ? ' ssc-logo-avatar' + (w.id !== 'admin' ? ' ssc-client-logo' : '') : '';
   const workspaceDetails = w => w.id === 'admin' ? 'All workspaces' : (w.client || 'Client workspace');
   return <div className="ssc-switcher-wrap" ref={ref} onKeyDown={keyDown} onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false); }}>
     <span className="ssc-switcher-label">CURRENT WORKSPACE</span>

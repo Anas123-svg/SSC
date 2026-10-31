@@ -14,7 +14,7 @@ HXC/Harmonix remains a client workspace; portal branding belongs to SSC.
 
 ## Workspace branding
 
-- `public/harmonix-logo.png` is the original `word/media/image1.png` embedded in the supplied HXC Word template, copied without alteration.
+- `public/harmonix-logo.png` is the refreshed website-style Harmonix wordmark asset, aligned to the requested main brand colour #B6D552.
 - `src/data/workspaceBranding.js` resolves a workspace's logo. User-uploaded logos take priority, then built-in branding by workspace ID.
 - Harmonix displays its genuine wordmark against a neutral white backing for contrast and recognition on the dark sidebar. Other workspaces continue to use simple initials until their own logo is provided.
 - The workspace picker is now a flat native-feeling row rather than a prominent filled card.

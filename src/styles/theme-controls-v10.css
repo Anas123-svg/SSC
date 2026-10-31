@@ -1,0 +1,185 @@
+/* V10 final override: workspace imagery, light/dark toggle, dark-mode readability.
+   Loaded after older styles to avoid leaking Harmonix styling into SSC Admin. */
+
+/* Client logos blend into the CURRENT WORKSPACE control and dropdown.
+   Keep the existing Admin artwork treatment unchanged. */
+.sidebar.ssc-sidebar :is(.ssc-workspace-avatar.ssc-client-logo,.ssc-option-avatar.ssc-client-logo),
+html[data-workspace="harmonix"] .sidebar.ssc-sidebar :is(.ssc-workspace-avatar.ssc-client-logo,.ssc-option-avatar.ssc-client-logo){
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  padding:0;
+}
+.sidebar.ssc-sidebar :is(.ssc-workspace-avatar.ssc-client-logo img,.ssc-option-avatar.ssc-client-logo img){
+  background:transparent;
+  display:block;
+  width:100%;height:100%;object-fit:contain;object-position:left center;
+  border:0;border-radius:0;
+}
+.sidebar.ssc-sidebar .ssc-client-logo + .ssc-switcher-info{margin-left:2px;}
+
+/* A single theme button. Icon indicates CURRENT mode; pressing changes it. */
+.ssc-theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  width:38px;height:38px;min-width:38px;min-height:38px;
+  border:1px solid #DFE7DB;border-radius:10px;
+  background:#F7FAF2;color:#4B5E34;cursor:pointer;
+  transition:background-color .16s,border-color .16s,color .16s;
+}
+.ssc-theme-toggle:hover{background:#ECF5D6;border-color:#BDD584;color:#34451E;}
+.ssc-theme-toggle:focus-visible{outline:3px solid #B6D552;outline-offset:3px;}
+.ssc-theme-toggle--labelled{width:auto;padding:0 15px;gap:9px;font-size:12px;font-weight:750;}
+.ssc-theme-settings-row{display:flex;gap:15px;align-items:center;flex-wrap:wrap;margin-top:16px;}
+.ssc-theme-settings-row>span{color:var(--app-muted);font-size:12px;line-height:1.5;}
+html:not([data-workspace="harmonix"]) .ssc-theme-toggle{background:#FFF4F7;border-color:#EADDE4;color:#AD3457;}
+html:not([data-workspace="harmonix"]) .ssc-theme-toggle:hover{background:#FEE7EF;border-color:#E7A2B6;}
+
+/* The team/projects KPI tiles use a legible label + icon row with no tiny/squashed text. */
+.ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat{
+  min-width:0;min-height:134px;padding:19px 20px;gap:8px;
+}
+.ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0;
+  font-size:12.5px;line-height:1.4;font-weight:720;letter-spacing:0;
+}
+.ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label>span{
+  display:block;min-width:0;max-width:calc(100% - 37px);white-space:normal;overflow-wrap:normal;
+}
+.ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label>svg{
+  width:32px;height:32px;flex:0 0 32px;padding:7px;border-radius:9px;
+}
+.ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat>strong{
+  display:block;font-size:32px;line-height:1.15;font-weight:800;font-variant-numeric:tabular-nums;
+}
+.ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat>small{
+  font-size:11.5px;line-height:1.5;font-weight:520;
+}
+html[data-workspace="harmonix"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat-label,
+html[data-workspace="harmonix"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat>small{color:#E1E9D8;}
+html[data-workspace="harmonix"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat>strong{color:#D8EE9A;}
+html[data-workspace="harmonix"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat-label>svg{
+  color:#D8EE9A;background:#40523D;
+}
+
+/* Search boxes, keyboard hint and notifications adapt with the whole top bar. */
+html[data-theme="dark"] .topbar .search{
+  background:#253444;border:1px solid #475C6E;color:#AFC1D1;
+  box-shadow:none;min-width:0;
+}
+html[data-theme="dark"] .topbar .search input{
+  background:transparent;color:#F0F5FB;border:0;box-shadow:none;outline:0;
+  caret-color:#B6D552;
+}
+html[data-theme="dark"] .topbar .search input::placeholder{color:#B4C3D1;opacity:1;}
+html[data-theme="dark"] .topbar .search kbd{
+  color:#C6D3DD;background:#34475A;border:1px solid #596C7C;
+}
+html[data-theme="dark"] .topbar .search:focus-within{
+  background:#2B4051;border-color:#8DA9BA;box-shadow:0 0 0 3px #8DA9BA26;
+}
+html[data-theme="dark"] .topbar :is(.hamburger,.icon-button){color:#CDD9E4;}
+html[data-theme="dark"] .topbar :is(.hamburger,.icon-button):hover{background:#344557;}
+html[data-theme="dark"] .topbar .notify-pop{
+  color:#ECF3FA;background:#1E2D3A;border:1px solid #405367;
+}
+html[data-theme="dark"] .topbar .notify-pop :is(h3,strong,span){color:#EDF3FB;}
+html[data-theme="dark"] .topbar .notify-pop small{color:#B9C9D6;}
+html[data-theme="dark"] .topbar .notify-pop>button{border-color:#405367;}
+html[data-theme="dark"] .topbar .notify-pop>button:hover{background:#2E4050;}
+html[data-theme="dark"] .ssc-theme-toggle{
+  background:#283B4B;border-color:#506475;color:#E3EFFB;
+}
+html[data-theme="dark"] .ssc-theme-toggle:hover{background:#334B5D;border-color:#8196AA;}
+html[data-theme="dark"][data-workspace="harmonix"] .topbar .search{
+  background:#293B30;border-color:#506850;color:#D4E3CE;
+}
+html[data-theme="dark"][data-workspace="harmonix"] .topbar .search input{color:#F3F8EB;caret-color:#B6D552;}
+html[data-theme="dark"][data-workspace="harmonix"] .topbar .search input::placeholder{color:#C1D2B7;}
+html[data-theme="dark"][data-workspace="harmonix"] .topbar .search kbd{
+  background:#354C3A;border-color:#64775F;color:#DFECD6;
+}
+html[data-theme="dark"][data-workspace="harmonix"] .topbar .search:focus-within{
+  border-color:#B6D552;background:#304838;box-shadow:0 0 0 3px #B6D55230;
+}
+html[data-theme="dark"][data-workspace="harmonix"] .ssc-theme-toggle{
+  background:#304233;border-color:#657A54;color:#DAEDA1;
+}
+html[data-theme="dark"][data-workspace="harmonix"] .ssc-theme-toggle:hover{
+  background:#40573C;border-color:#B6D552;
+}
+
+/* Harmonix light/dark search and filter controls: avoid light fill and dark text mixing. */
+html[data-theme="dark"] :is(
+  .ssc-v2-toolbar .ssc-v2-search,.ssc-v2-toolbar .ssc-v2-select,
+  .ssc-report-search,.sw-search,.ix-search,.sx-search,
+  .insight-filters input,.insight-filters select,.ssc-report-select select,
+  .pd-document-filter select,.ssc-calendar-trigger,
+  .ssc-v2-settings-grid input:not([type="checkbox"]),
+  .ssc-pform .ssc-pform-field input,.ssc-pform .ssc-pform-field select,
+  .ssc-pform .ssc-pform-field textarea
+){
+  background:#243444;border-color:#495C6E;color:#E8F2FA;
+}
+html[data-theme="dark"] :is(
+  .ssc-v2-toolbar .ssc-v2-search input,.ssc-v2-toolbar .ssc-v2-select select,
+  .ssc-report-search input,.sw-search input,.ix-search input,.sx-search input,
+  .ssc-v2-toolbar input,.ssc-v2-toolbar select,.sx-select-wrap select,
+  .insight-filters input,.insight-filters select,.ssc-report-select select,
+  .ssc-pform .ssc-pform-field input,.ssc-pform .ssc-pform-field select,
+  .ssc-pform .ssc-pform-field textarea
+){
+  color:#ECF5FC;background:transparent;caret-color:#B6D552;
+}
+html[data-theme="dark"] :is(.ssc-v2-toolbar,.ssc-pform,.insight-page,.hxstudio,.ssc-report-library) input::placeholder{
+  color:#B5C6D2;opacity:1;
+}
+html[data-theme="dark"] :is(.ssc-v2-toolbar,.ssc-pform,.insight-page,.hxstudio,.ssc-report-library) :is(input,select,textarea):focus-visible{
+  outline-color:#9BAFBF;
+}
+html[data-theme="dark"] :is(.ssc-v2-toolbar select,.insight-filters select,.ssc-report-select select,.sx-select-wrap select) option{
+  color:#EDF5FA;background:#243444;
+}
+html[data-theme="dark"][data-workspace="harmonix"] :is(
+  .ssc-v2-toolbar .ssc-v2-search,.ssc-v2-toolbar .ssc-v2-select,
+  .ssc-report-search,.sw-search,.ix-search,.sx-search,
+  .insight-filters input,.insight-filters select,.ssc-report-select select,
+  .pd-document-filter select,.ssc-calendar-trigger,
+  .ssc-pform .ssc-pform-field input,.ssc-pform .ssc-pform-field select,
+  .ssc-pform .ssc-pform-field textarea
+){background:#293B30;border-color:#50654E;color:#EDF5E8;}
+html[data-theme="dark"][data-workspace="harmonix"] :is(
+  .ssc-v2-toolbar .ssc-v2-search input,.ssc-v2-toolbar .ssc-v2-select select,
+  .ssc-report-search input,.sw-search input,.ix-search input,.sx-search input,
+  .ssc-v2-toolbar input,.ssc-v2-toolbar select,.sx-select-wrap select,
+  .insight-filters input,.insight-filters select,.ssc-report-select select
+){color:#EDF7EA;background:transparent;}
+html[data-theme="dark"][data-workspace="harmonix"] :is(.ssc-v2-toolbar,.ssc-pform,.insight-page,.hxstudio,.ssc-report-library) :is(input,select,textarea):focus-visible{
+  outline-color:#B6D552;
+}
+html[data-theme="dark"][data-workspace="harmonix"] :is(.ssc-v2-toolbar select,.insight-filters select,.ssc-report-select select,.sx-select-wrap select) option{
+  color:#EDF7EA;background:#293B30;
+}
+
+/* Card copy and icon contrast in BOTH themes; override older generic headings. */
+html[data-workspace="harmonix"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat-label>span{
+  color:#E9F0E3;
+}
+html[data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat-label,
+html[data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat-label>span,
+html[data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat>small{color:#E0ECDD;}
+html[data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat-label svg{
+  color:#E2F1B4;background:#445743;
+}
+html[data-theme="dark"] :is(.ssc-v2-team,.ssc-v2-projects) .ssc-v2-stat>strong{color:#E2F1AC;}
+@media(max-width:700px){
+  .top-tools{gap:7px;}
+  .ssc-theme-toggle{width:37px;height:37px;min-width:37px;min-height:37px;}
+  .ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat{padding:15px 14px;min-height:132px;}
+  .ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label{font-size:11.5px;}
+}
+@media(max-width:440px){
+  .ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat-label>svg{width:28px;height:28px;flex-basis:28px;padding:6px;}
+  .ssc-v2-page :is(.ssc-v2-team-stats,.ssc-v2-project-stats) .ssc-v2-stat>strong{font-size:28px;}
+}
+@media print{.ssc-theme-toggle{display:none!important;}}
