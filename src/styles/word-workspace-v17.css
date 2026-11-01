@@ -1,0 +1,225 @@
+/* V17: Modern ribbon navigation — scoped to the HXC Word workspace only.
+ * Retains all ribbon actions, HXC field controls, and separate SSC/Harmonix themes.
+ */
+.hxword {
+  --hxmenu-bg: #fcfdfb;
+  --hxmenu-ink: #405047;
+  --hxmenu-muted: #728075;
+  --hxmenu-active: #27392d;
+  --hxmenu-line: #e0e6df;
+  --hxmenu-hover: #eef4e7;
+  --hxmenu-selected: #eaf2da;
+  --hxmenu-accent: #a8c94b;
+}
+.hxword .hxword-menu {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  flex: 0 0 54px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0 15px 0 20px;
+  gap: 12px;
+  background: var(--hxmenu-bg);
+  color: var(--hxmenu-ink);
+  border-bottom: 1px solid var(--hxmenu-line);
+  box-shadow: 0 1px 3px rgba(19, 35, 25, .035);
+}
+.hxword .hxword-menu-scroller {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.hxword .hxword-menu-scroller::-webkit-scrollbar { display: none; }
+.hxword .hxword-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 5px;
+  width: max-content;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+.hxword .hxword-tabs .hxword-menu-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 38px;
+  height: 38px;
+  padding: 0 15px;
+  margin: 0;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 580;
+  letter-spacing: .005em;
+  line-height: 1;
+  color: var(--hxmenu-ink);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  isolation: isolate;
+}
+.hxword .hxword-tabs .hxword-menu-tab:hover:not(:disabled) {
+  color: var(--hxmenu-active);
+  background: var(--hxmenu-hover);
+  border-color: #e3eadc;
+}
+.hxword .hxword-tabs .hxword-menu-tab.active,
+.hxword .hxword-tabs .hxword-menu-tab[aria-selected="true"] {
+  color: var(--hxmenu-active);
+  background: var(--hxmenu-selected);
+  border-color: #dce8c4;
+  font-weight: 760;
+}
+.hxword .hxword-tabs .hxword-menu-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 14px;
+  right: 14px;
+  height: 3px;
+  background: var(--hxmenu-accent);
+  border-radius: 3px 3px 0 0;
+}
+/* File is a distinct entry point, as in desktop word processors. */
+.hxword .hxword-tabs .hxword-menu-tab.is-file {
+  color: #2c3b32;
+  background: #edf1e9;
+  border-color: #e3e9df;
+  font-weight: 720;
+  margin-right: 12px;
+}
+.hxword .hxword-tabs .hxword-menu-tab.is-file:hover:not(:disabled) {
+  background: #e3edd6;
+}
+.hxword .hxword-tabs .hxword-menu-tab.is-file.active {
+  background: #dfeac8;
+  border-color: #c7daaa;
+}
+.hxword .hxword-tabs .hxword-menu-tab.is-contextual {
+  color: #485d2c;
+  background: #f2f6e9;
+  border-color: #e5ebd8;
+}
+.hxword .hxword-tabs .hxword-menu-tab.is-contextual.active {
+  background: #e5efcf;
+  border-color: #cbdbaf;
+}
+.hxword .hxword-menu-actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 5px;
+  padding-left: 10px;
+  border-left: 1px solid var(--hxmenu-line);
+}
+.hxword .hxword-menu-actions .hxword-menu-scroll,
+.hxword .hxword-menu-actions .hxword-ribbon-toggle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 7px;
+  height: 34px;
+  min-height: 34px;
+  margin: 0;
+  padding: 0 9px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--hxmenu-ink);
+  font-size: 11px;
+  font-weight: 620;
+  transition: background-color .15s ease;
+}
+.hxword .hxword-menu-actions button:hover:not(:disabled) {
+  background: var(--hxmenu-hover);
+  border-color: var(--hxmenu-line);
+}
+.hxword .hxword-menu-actions .hxword-menu-scroll { display: none; padding: 0 7px; }
+.hxword .hxword-menu-divider { display: none; }
+.hxword .hxword-tabs .hxword-menu-tab:focus-visible,
+.hxword .hxword-menu-actions button:focus-visible {
+  outline: 2px solid #829f32;
+  outline-offset: -2px;
+}
+/* A collapsed ribbon gives the paper more vertical space without remounting the editor. */
+.hxword .hxword-ribbon[hidden] { display: none !important; }
+.hxword .hxword-ribbon {
+  border-bottom: 1px solid var(--hxmenu-line);
+  background: #fff;
+  padding: 11px 15px 6px;
+  gap: 7px;
+  box-shadow: 0 4px 12px rgba(20,40,27,.045);
+}
+.hxword .hxword-ribbon .hxword-group { padding: 2px 14px 4px; gap: 7px; }
+.hxword .hxword-ribbon .hxword-group>small {
+  font-size: 10px;
+  font-weight: 620;
+  letter-spacing: .025em;
+  color: #69776d;
+}
+.hxword .hxword-ribbon .hxword-tools button { border-radius: 6px; }
+.hxword .hxword-ribbon .hxword-tools button[aria-pressed="true"] {
+  color: #30411f;
+  background: #eaf2d5;
+  border-color: #bdd18f;
+}
+@media(max-width: 1060px) {
+  .hxword .hxword-menu { padding: 0 9px 0 11px; gap: 5px; }
+  .hxword .hxword-menu-actions { gap: 2px; padding-left: 7px; }
+  .hxword .hxword-menu-actions .hxword-menu-scroll { display: inline-flex; }
+  .hxword .hxword-menu-actions .hxword-ribbon-toggle span { display: none; }
+  .hxword .hxword-tabs .hxword-menu-tab { padding: 0 12px; }
+}
+@media(max-width: 600px) {
+  .hxword .hxword-menu { flex-basis: 49px; min-height: 49px; padding: 0 6px; }
+  .hxword .hxword-tabs { gap: 3px; }
+  .hxword .hxword-tabs .hxword-menu-tab { height: 35px; min-height: 35px; padding: 0 12px; font-size: 12px; }
+  .hxword .hxword-tabs .hxword-menu-tab.is-file { margin-right: 4px; }
+  .hxword .hxword-tabs .hxword-menu-tab.active::after { bottom: -7px; }
+  .hxword .hxword-menu-actions { gap: 0; }
+  .hxword .hxword-menu-actions button { padding: 0 6px; }
+  .hxword .hxword-ribbon { padding: 7px 8px; }
+}
+html[data-theme="dark"] .hxword {
+  --hxmenu-bg: #223128;
+  --hxmenu-ink: #d5e1d3;
+  --hxmenu-muted: #a6b8a3;
+  --hxmenu-active: #f2f9eb;
+  --hxmenu-line: #435544;
+  --hxmenu-hover: #344a36;
+  --hxmenu-selected: #415938;
+  --hxmenu-accent: #b6d552;
+}
+html[data-theme="dark"] .hxword .hxword-menu { background: var(--hxmenu-bg); color: var(--hxmenu-ink); border-bottom-color: var(--hxmenu-line); }
+html[data-theme="dark"] .hxword .hxword-tabs { background: transparent; }
+html[data-theme="dark"] .hxword .hxword-tabs .hxword-menu-tab { color: var(--hxmenu-ink); background: transparent; }
+html[data-theme="dark"] .hxword .hxword-tabs .hxword-menu-tab:hover:not(:disabled) { color:#f8ffef;background:#344a36;border-color:#4a6448; }
+html[data-theme="dark"] .hxword .hxword-tabs .hxword-menu-tab.active { color: #f5ffe8; background: #405637; border-color: #61774b; }
+html[data-theme="dark"] .hxword .hxword-tabs .hxword-menu-tab.is-file { background: #334539; color: #ebf6e2; border-color:#536552; }
+html[data-theme="dark"] .hxword .hxword-tabs .hxword-menu-tab.is-file.active { background: #455b39; border-color:#77934b; }
+html[data-theme="dark"] .hxword .hxword-tabs .hxword-menu-tab.is-contextual { background:#303e2e;color:#e0efcc;border-color:#485f3b; }
+html[data-theme="dark"] .hxword .hxword-tabs .hxword-menu-tab.is-contextual.active { background:#455e35;border-color:#728a52; }
+html[data-theme="dark"] .hxword .hxword-menu-actions button { color:#dbead9; }
+html[data-theme="dark"] .hxword .hxword-ribbon { background:#25362a; border-color:var(--hxmenu-line); }
+html[data-theme="dark"] .hxword .hxword-ribbon .hxword-group>small { color:#bdcdb9; }
+html[data-theme="dark"] .hxword .hxword-ribbon .hxword-tools button[aria-pressed="true"] {background:#445b36;border-color:#728a52;color:#eff8e9;}
+@media(prefers-reduced-motion:reduce) {
+  .hxword .hxword-menu button,.hxword .hxword-ribbon button { transition:none; }
+}
+@media print { .hxword .hxword-menu { display:none!important; } }

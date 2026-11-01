@@ -1,6 +1,8 @@
 import React from 'react';
 import { sanitizeRichText } from './richText.js';
 import { isComplianceBlock, normalizeCompliance } from './hxcSchema.js';
+import { getComplianceLabels } from './hxcEditableChecklist.js';
+import { hasCustomPalette, selectedPaletteVariables, paletteStyle } from './hxcComplianceColors.js';
 import DigitalSignature from './DigitalSignature.jsx';
 import PhotoUploadField from './PhotoUploadField.jsx';
 const isBlank = v => v === undefined || v === null || v === '';
@@ -25,9 +27,9 @@ export function FormBlock({ block, answers, setAnswer, disabled = false }) {
   }
   const options = (block.options || []).filter(Boolean);
   return <div className="sw-field"><label htmlFor={!['radio','checkbox'].includes(block.type) ? id : undefined}>{block.label}{block.required ? <span className="sw-required"> *</span> : ''}</label>{block.help && <small>{block.help}</small>}
-    {block.type === 'radio' && <div className={"sw-choices" + (isComplianceBlock(block) ? " sw-compliance-choices" : "")}>{options.map(option => <label key={option} className={isComplianceBlock(block) ? "sw-compliance-choice status-" + (normalizeCompliance(option) === "N/A" ? "NA" : normalizeCompliance(option)) + (value === option ? " selected" : "") : ""}><input type="radio" name={id} value={option} checked={value === option} disabled={disabled} onChange={() => set(option)}/>{option}</label>)}</div>}
+    {block.type === 'radio' && <div className={"sw-choices" + (isComplianceBlock(block) ? " sw-compliance-choices" : "")}>{options.map(option => <label key={option} className={isComplianceBlock(block) ? "sw-compliance-choice status-" + (normalizeCompliance(option) === "N/A" ? "NA" : normalizeCompliance(option)) + (value === option ? " selected" : "") : ""} data-custom-colors={isComplianceBlock(block) && hasCustomPalette(block, normalizeCompliance(option))} style={isComplianceBlock(block) ? selectedPaletteVariables(block, normalizeCompliance(option)) : undefined}><input type="radio" name={id} value={option} checked={value === option} disabled={disabled} onChange={() => set(option)}/>{isComplianceBlock(block) ? `${normalizeCompliance(option)} — ${getComplianceLabels(block)[normalizeCompliance(option)] || option}` : option}</label>)}</div>}
     {block.type === 'checkbox' && <div className="sw-choices">{options.map(option => <label key={option}><input type="checkbox" checked={Array.isArray(value) && value.includes(option)} disabled={disabled} onChange={e => set(e.target.checked ? [...(Array.isArray(value)?value:[]),option] : (Array.isArray(value)?value:[]).filter(x => x !== option))}/>{option}</label>)}</div>}
-    {block.type === 'select' && <select id={id} value={isBlank(value)?'':value} disabled={disabled} onChange={e => set(e.target.value)}><option value="">Select an option</option>{options.map(option => <option key={option} value={option}>{option}</option>)}</select>}
+    {block.type === 'select' && <select id={id} value={isBlank(value)?'':value} disabled={disabled} data-custom-colors={isComplianceBlock(block) && hasCustomPalette(block, normalizeCompliance(value) || 'unset')} style={isComplianceBlock(block) ? selectedPaletteVariables(block, normalizeCompliance(value) || 'unset') : undefined} className={isComplianceBlock(block) ? 'sw-compliance-select' : undefined} onChange={e => set(e.target.value)}><option value="">Select an option</option>{options.map(option => <option key={option} value={option} style={isComplianceBlock(block) && hasCustomPalette(block, normalizeCompliance(option)) ? paletteStyle(block,normalizeCompliance(option)) : undefined}>{option}</option>)}</select>}
     {block.type === 'textarea' && <textarea id={id} rows={3} disabled={disabled} value={value ?? ''} onChange={e => set(e.target.value)}/>}
     {['text','number','date','time','email'].includes(block.type) && <input id={id} type={block.type} disabled={disabled} value={value ?? ''} onChange={e => set(e.target.value)}/>}
   </div>;

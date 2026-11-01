@@ -1,0 +1,192 @@
+/* V18 — Two deliberate actions on each template card; stand-alone read-only preview. */
+.hxc-template-catalog .hxc-template-catalog-card {
+  cursor: default;
+}
+.hxc-template-catalog .hxc-template-catalog-description {
+  margin: 0;
+}
+.hxc-template-catalog .hxc-template-catalog-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: auto;
+}
+.hxc-template-catalog .hxc-template-catalog-card-action {
+  width: 100%;
+  min-height: 42px;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.hxc-template-catalog .hxc-template-catalog-card-action span {
+  flex: 1;
+}
+.hxc-template-catalog .hxc-template-catalog-card-action:hover {
+  filter: brightness(.97);
+}
+.hxc-template-catalog .hxc-template-catalog-card-action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.hxc-template-catalog .hxc-template-catalog-card-action--preview {
+  background: #fff;
+  border-color: #e0e5ed;
+  color: #475569;
+}
+.hxc-template-catalog .hxc-template-catalog-card-action--preview:hover {
+  background: #f5f7fa;
+  border-color: #bac6d3;
+}
+html[data-workspace="harmonix"] .hxc-template-catalog .hxc-template-catalog-card-action--preview {
+  background: var(--hxit-panel, #fff);
+  border-color: var(--hxit-outline, #d6e0cc);
+  color: var(--hxit-ink, #2d3b32);
+}
+html[data-workspace="harmonix"] .hxc-template-catalog .hxc-template-catalog-card-action--preview:hover {
+  background: var(--hxit-pale, #edf4e3);
+  border-color: var(--hxit-primary, #b6d552);
+}
+html[data-theme="dark"] .hxc-template-catalog .hxc-template-catalog-card-action--preview,
+html[data-workspace="harmonix"][data-theme="dark"] .hxc-template-catalog .hxc-template-catalog-card-action--preview {
+  background: #29392f;
+  color: #e4eee5;
+  border-color: #52654f;
+}
+html[data-theme="dark"] .hxc-template-catalog .hxc-template-catalog-card-action--preview:hover,
+html[data-workspace="harmonix"][data-theme="dark"] .hxc-template-catalog .hxc-template-catalog-card-action--preview:hover {
+  background: #384d3c;
+  border-color: #b6d552;
+}
+.hxc-template-preview-page {
+  --hxc-preview-accent: #ee3861;
+  --hxc-preview-tint: #fff0f4;
+  --hxc-preview-accent-ink: #ac305a;
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+  height: calc(100vh - 155px);
+  min-height: 540px;
+  display: flex;
+  flex-direction: column;
+}
+html[data-workspace="harmonix"] .hxc-template-preview-page {
+  --hxc-preview-accent: #b6d552;
+  --hxc-preview-tint: #eaf3d7;
+  --hxc-preview-accent-ink: #334b21;
+}
+.hxc-template-preview-page .hxc-preview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+  border-radius: 12px;
+  border: 1px solid #e0e6e1;
+  background: #fff;
+  --word-stage: #eef1ed;
+  --word-line: #e0e5e0;
+  --word-muted: #67776f;
+}
+.hxc-template-preview-page .hxc-preview-toolbar {
+  flex: 0 0 auto;
+  min-height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+  padding: 12px 14px;
+  background: #fff;
+  border-bottom: 1px solid #e0e6e1;
+}
+.hxc-template-preview-page .hxc-preview-toolbar strong {
+  width: auto;
+  margin-right: auto;
+  color: #263b2e;
+  font-size: 13px;
+}
+.hxc-template-preview-page .hxc-preview-toolbar :is(button, select) {
+  border-radius: 7px;
+  min-height: 32px;
+  padding: 5px 9px;
+  color: #344438;
+  background: #f7f9f5;
+  border: 1px solid #dce5d8;
+}
+.hxc-template-preview-page .hxc-preview-toolbar button:last-child {
+  background: var(--hxc-preview-tint);
+  border-color: var(--hxc-preview-accent);
+  color: var(--hxc-preview-accent-ink);
+  font-weight: 700;
+}
+.hxc-template-preview-page .hxc-preview-toolbar button:focus-visible {
+  outline: 2px solid var(--hxc-preview-accent);
+  outline-offset: 2px;
+}
+.hxc-template-preview-page .hxc-preview-stage {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  background: #eef1ed;
+}
+.hxc-template-preview-page .hxc-preview-note {
+  background: #fff;
+  border-top: 1px solid #e0e6e1;
+  line-height: 1.5;
+  font-size: 11px;
+}
+.hxc-template-preview-error {
+  padding: 26px;
+  background: #fff;
+  border: 1px solid #e0e6e1;
+  border-radius: 12px;
+}
+.hxc-template-preview-error button {
+  padding: 10px 14px;
+  border: 1px solid var(--hxc-preview-accent);
+  background: var(--hxc-preview-tint);
+  border-radius: 8px;
+  cursor: pointer;
+}
+html[data-theme="dark"] html[data-workspace="harmonix"] .hxc-template-preview-page {
+  --hxc-preview-accent: #b6d552;
+  --hxc-preview-tint: #eaf3d7;
+  --hxc-preview-accent-ink: #334b21;
+}
+.hxc-template-preview-page .hxc-preview {
+  background: #213027;
+  border-color: #425545;
+}
+html[data-theme="dark"] .hxc-template-preview-page .hxc-preview-toolbar,
+html[data-theme="dark"] .hxc-template-preview-page .hxc-preview-note {
+  background: #24362b;
+  border-color: #415543;
+  color: #d4e3d6;
+}
+html[data-theme="dark"] .hxc-template-preview-page .hxc-preview-toolbar strong {color: #edf4ea;}
+html[data-theme="dark"] .hxc-template-preview-page .hxc-preview-toolbar :is(button, select) {
+  background: #334939;
+  border-color: #536b52;
+  color: #ecf5e8;
+}
+html[data-theme="dark"] .hxc-template-preview-page .hxc-preview-toolbar button:last-child {
+  background: var(--hxc-preview-accent);
+  border-color: var(--hxc-preview-accent);
+  color: #18261b;
+}
+html[data-theme="dark"] .hxc-template-preview-page .hxc-preview-stage {background: #17221c;}
+@media (max-width: 860px) {
+  .hxc-template-preview-page {height: calc(100dvh - 140px); min-height: 400px;}
+  .hxc-template-preview-page .hxc-preview-toolbar {gap: 6px;}
+  .hxc-template-preview-page .hxc-preview-toolbar strong {width: 100%;}
+}
+@media (max-width: 560px) {
+  .hxc-template-preview-page {height: calc(100dvh - 105px);}
+  .hxc-template-preview-page .hxc-preview-toolbar {padding: 9px;}
+  .hxc-template-preview-page .hxc-preview-toolbar :is(button,select) {min-height: 34px;}
+}

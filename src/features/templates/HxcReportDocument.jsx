@@ -1,9 +1,11 @@
+import { selectedPaletteVariables, hasCustomPalette, paletteStyle } from './hxcComplianceColors.js';
 import React, { useState } from 'react';
 import harmonixLogo from '../../assets/harmonix-logo.png';
 import { FormBlock } from './FormBlock.jsx';
 import DigitalSignature from './DigitalSignature.jsx';
 import { getReportConfig } from './hxcReportConfig.js';
 import { complianceScore, isComplianceBlock, normalizeCompliance, overallRating } from './hxcSchema.js';
+import { COMPLIANCE_CODES, getComplianceLabels, getCellHint } from './hxcEditableChecklist.js';
 
 const METHODS = [
   ['Item compliance', 'Select C (Compliant), MI (Minor Issue), MA (Major Issue) or N/A. Do not give individual items a numerical score.'],
@@ -66,11 +68,15 @@ function ChecklistTable({ section, number, answers, setAnswer, disabled, config 
       {(!compliance && !decorative || compliance && !hasCompliance) && <FormBlock block={block} answers={answers} setAnswer={setAnswer} disabled={disabled}/>}
       {decorative && !['heading','paragraph'].includes(block.type) && <FormBlock block={block} answers={answers} setAnswer={setAnswer} disabled={disabled}/>}
     </div>;
-    if (col.id === 'compliance') return compliance && <select className={'hwd-compliance-select status-' + (normalizeCompliance(answers[block.id] || '') || 'unset').replace('/','')}  aria-label={`Compliance for ${block.ref || block.label}`} value={normalizeCompliance(answers[block.id] || '')} disabled={disabled} onChange={e => setAnswer(block.id, e.target.value)}>
-      <option value="">C / MI / MA / N/A</option><option value="C">C</option><option value="MI">MI</option><option value="MA">MA</option><option value="N/A">N/A</option>
+    if (col.id === 'compliance') {
+      if (!compliance) return null;
+      const status = normalizeCompliance(answers[block.id] || '') || 'unset';
+      return <select className={'hwd-compliance-select status-' + status.replace('/','')} style={selectedPaletteVariables(block,status)} data-custom-colors={hasCustomPalette(block,status)} aria-label={`Compliance for ${block.ref || block.label}`} value={normalizeCompliance(answers[block.id] || '')} disabled={disabled} onChange={e => setAnswer(block.id, e.target.value)}>
+      <option value="">Choose compliance</option>{COMPLIANCE_CODES.map(code => <option value={code} key={code} style={hasCustomPalette(block,code) ? paletteStyle(block,code) : undefined}>{code} — {getComplianceLabels(block)[code]}</option>)}
     </select>;
+    }
     const key = col.id === 'evidence' ? `${block.id}:evidence` : col.id === 'action' ? `${block.id}:action` : `${block.id}:column:${col.id}`;
-    return <Input type={col.type || 'text'} ariaLabel={`${col.label} for ${block.ref || block.label}`} value={answers[key]} set={v => setAnswer(key,v)} disabled={disabled} placeholder={col.id === 'evidence' ? (block.evidenceHint ?? block.help ?? '') : ''}/>;
+    return <Input type={col.type || 'text'} ariaLabel={`${col.label} for ${block.ref || block.label}`} value={answers[key]} set={v => setAnswer(key,v)} disabled={disabled} placeholder={getCellHint(block,col.id,col.label)}/>;
   };
   const includes = id => columns.some(col=>col.id === id);
   return <><div className="hwd-table-wrap"><table className="hwd-table hwd-checklist-table">

@@ -1,42 +1,31 @@
-/** Restricted HTML allowed inside saved HXC document text. Never render unsanitised user markup. */
-const TAGS = new Set(['P','DIV','BR','STRONG','B','EM','I','U','S','STRIKE','H1','H2','H3','H4','UL','OL','LI','BLOCKQUOTE','SPAN','A','HR','TABLE','THEAD','TBODY','TR','TH','TD','SUB','SUP']);
-const STYLE_NAMES = new Set(['color','background-color','text-align','font-size','font-family','font-weight','font-style','text-decoration']);
-export function sanitizeRichText(html) {
+import DOMPurify from 'dompurify';
+
+const allowed = ['p','div','br','strong','b','em','i','u','s','strike','h1','h2','h3','h4','h5','h6','ul','ol','li','blockquote','span','a','hr','table','colgroup','col','thead','tbody','tr','th','td','sub','sup','img','mark','section'];
+/** Sanitize imported, pasted, and legacy rich text before parsing or displaying it. */
+export function sanitizeRichText(html, { trustedDocument = false } = {}) {
   if (!html || typeof html !== 'string') return '';
-  if (typeof DOMParser === 'undefined') return html.replace(/<[^>]*>/g, '');
-  const doc = new DOMParser().parseFromString(`<div>${html}</div>`, 'text/html');
-  const root = doc.body.firstElementChild;
-  const clean = node => {
-    for (const child of Array.from(node.childNodes)) {
-      if (child.nodeType === 8) { child.remove(); continue; }
-      if (child.nodeType !== 1) continue;
-      if (child.tagName === 'FONT') {
-        const span = doc.createElement('span');
-        for (const key of ['color','face','size']) { const v = child.getAttribute(key); if (!v) continue;
-          if (key === 'color' && /^(#[a-f\d]{3,8}|[a-z]+)$/i.test(v)) span.style.color = v;
-          if (key === 'face' && /^[a-z ,'-]{1,45}$/i.test(v)) span.style.fontFamily = v;
-          if (key === 'size' && Number(v)>=1 && Number(v)<=7) span.style.fontSize = `${[0,10,13,16,18,24,32,48][Number(v)]}px`; }
-        while(child.firstChild) span.appendChild(child.firstChild);
-        child.replaceWith(span); clean(span); continue;
-      }
-      if (!TAGS.has(child.tagName)) {
-        if (['SCRIPT','STYLE','IFRAME','OBJECT','SVG','FORM','IMG','VIDEO','AUDIO','META','LINK'].includes(child.tagName)) { child.remove(); continue; }
-        clean(child); child.replaceWith(...Array.from(child.childNodes)); continue;
-      }
-      const href = child.tagName === 'A' ? child.getAttribute('href') : null;
-      const styles = [...child.style].filter(property => STYLE_NAMES.has(property)).map(property => [property,child.style.getPropertyValue(property)]);
-      for (const attr of Array.from(child.attributes)) child.removeAttribute(attr.name);
-      if (child.tagName === 'A' && href && /^(https?:\/\/|mailto:)/i.test(href)) { child.setAttribute('href', href); child.setAttribute('target','_blank'); child.setAttribute('rel','noopener noreferrer'); }
-      for (const [key,value] of styles) {
-        // Reject CSS functions, URLs and escaping. Text appearance only.
-        if (/url\s*\(|expression\s*\(|[\\<>;]/i.test(value)) continue;
-        if ((key === 'color' || key === 'background-color') && !/^(#[a-f\d]{3,8}|rgb\([\d\s,.%]+\)|rgba\([\d\s,.%]+\)|[a-z]+)$/i.test(value.trim())) continue;
-        if (key === 'font-size' && !/^(\d{1,2}(px|pt|em|rem|%)|small|medium|large|x-large)$/.test(value.trim())) continue;
-        child.style.setProperty(key,value);
-      }
-      clean(child);
+  if (typeof window === 'undefined' || !DOMPurify.sanitize) return html.replace(/<[^>]*>/g, '');
+  const clean = DOMPurify.sanitize(html, { ALLOWED_TAGS: allowed, ALLOWED_ATTR: ['style','href','src','alt','title','width','height','colspan','rowspan','colwidth','start','class'], ALLOW_DATA_ATTR: trustedDocument, FORBID_TAGS: ['svg','math','script','style','iframe','object','form'] });
+  const root = new DOMParser().parseFromString(clean, 'text/html').body;
+  root.querySelectorAll('*').forEach(el => {
+    if (el.hasAttribute('href') && !/^(https?:\/\/|mailto:)/i.test(el.getAttribute('href'))) el.removeAttribute('href');
+    if (el.tagName === 'IMG' && !/^(data:image\/(png|jpeg|webp|gif);base64,|\/[^/])/i.test(el.getAttribute('src') || '')) { el.replaceWith(root.ownerDocument.createTextNode('[External image omitted; upload a local image]')); return; }
+    for (const name of [...el.style]) {
+      const value = el.style.getPropertyValue(name);
+      if (!/^(color|background-color|text-align|font-size|font-family|font-weight|font-style|text-decoration|line-height|margin-(left|right|top|bottom)|padding|border-(color|width)|vertical-align|width|height)$/.test(name) || /url\s*\(|expression|[\\<>]/i.test(value)) el.style.removeProperty(name);
     }
-  };
-  clean(root);
+  });
   return root.innerHTML;
+}
+export async function readDocumentImage(file) {
+  if (!file || !['image/png','image/jpeg','image/webp','image/gif'].includes(file.type)) throw new Error('Choose a PNG, JPEG, WebP or GIF image.');
+  if (file.size > 5 * 1024 * 1024) throw new Error('Images must be smaller than 5 MB.');
+  const data = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = () => reject(new Error('Unable to read image.')); reader.readAsDataURL(file); });
+  const img = new window.Image(); img.src = data; await img.decode();
+  const scale = Math.min(1, 1400 / Math.max(img.width, img.height));
+  const canvas = document.createElement('canvas'); canvas.width = Math.max(1, Math.round(img.width * scale)); canvas.height = Math.max(1, Math.round(img.height * scale));
+  canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+  const result = canvas.toDataURL('image/png');
+  if (result.length > 1000000) throw new Error('The optimized image exceeds 750 KB. Choose a smaller image.');
+  return result;
 }

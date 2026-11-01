@@ -2,6 +2,9 @@
  * Persisted on the HXC template and snapshotted with new inspections. */
 export const DEFAULT_REPORT_CONFIG = {
   title: 'HXC COMPLIANCE REPORT',
+  editorPage: { paper: 'A4', orientation: 'portrait', margins: 'normal' },
+  editorDocument: null,
+  editorReportParts: {},
   showMethod: true,
   showRatingBands: true,
   showSummary: true,

@@ -75,7 +75,7 @@ export default function App() {
   }, [activeWorkspaceId, page, detailId, subview]);
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(''), 4500); return () => clearTimeout(t); }, [toast]);
   useEffect(() => {
-    const listener = e => { if (e.key === 'Escape') { setModal(null); setNavOpen(false); setNotify(false); } if (e.key === '/' && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) { e.preventDefault(); searchRef.current?.focus(); } };
+    const listener = e => { if (e.key === 'Escape') { setModal(null); setNavOpen(false); setNotify(false); } if (e.key === '/' && !document.activeElement?.isContentEditable && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) { e.preventDefault(); searchRef.current?.focus(); } };
     window.addEventListener('keydown', listener); return () => window.removeEventListener('keydown', listener);
   }, []);
   // Persist the migration before accepting edits, retaining every original key as a compatibility backup.

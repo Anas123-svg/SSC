@@ -25,6 +25,11 @@ import './styles/harmonix-complete-audit.css';
 import './styles/theme-controls-v10.css';
 import './styles/harmonix-summary-cards-v11.css';
 import './styles/harmonix-calendar-v12.css';
+import './styles/word-template-v13.css';
+import './styles/word-workspace-v14.css';
+import './styles/word-workspace-v16.css';
+import './styles/word-workspace-v17.css';
+import './styles/template-catalog-actions-v18.css';
 initPWA();
 
 createRoot(document.getElementById('root')).render(<React.StrictMode><App /></React.StrictMode>);
